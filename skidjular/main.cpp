@@ -12,11 +12,10 @@ int main(int argc, char** args) {
     test.addNode("root", "test3", 3);
     test.addNode("test3", "test2", 2);
 
-    std::cout << test.searchTree(test.getTree(), "test2")->s_data;
-
-    test.remNode("test3");
     test.printTree(test.getTree());
-    std::cout << test.searchTree(test.getTree(), "test2")->s_data;
+    test.remNode("test3");
+    std::cout << "\n";
+    test.printTree(test.getTree());
 
     return 0;
 }

@@ -16,8 +16,9 @@ auto Tree<T>::addNode(std::string parent_name, std::string node_name, T data)->b
 
     // Check if new node is a root node.
     if (parent_name == "") {
-        // TODO: check return of delete function.
-        if (this->m_treeRoot) this->deleteTree(this->m_treeRoot);
+        if (this->m_treeRoot) 
+            if (!this->deleteTree(this->m_treeRoot))
+                std::cout << "Couldn't delete tree, possible memory leaks!\n";
         this->m_treeRoot = result;
     }
     else {
@@ -31,15 +32,12 @@ auto Tree<T>::addNode(std::string parent_name, std::string node_name, T data)->b
     // Add new Node to node array.
     this->m_treeNodes.push_back(result);
 
-    // Add new Node to nodeID map.
-    this->m_treeIDMap.insert(std::make_pair(result->s_name, (int)(m_treeNodes.size()-1)));
-    
     return true;
 }
 template<typename T>
 auto Tree<T>::addNode(TreeNode<T> node)->bool {
-    std::shared_ptr<TreeNode<T>> result = std::make_shared<TreeNode<T>>(node);
     // Add new Node to node array.
+    std::shared_ptr<TreeNode<T>> result = std::make_shared<TreeNode<T>>(node);
     this->m_treeNodes.push_back(result);
 
     // Add new Node to nodeId map.
@@ -47,8 +45,9 @@ auto Tree<T>::addNode(TreeNode<T> node)->bool {
 
     // Check if new node is a root node.
     if (result->s_name == "") {
-        // TODO: check return of delete function.
-        if (this->m_treeRoot) this->deleteTree(this->m_treeRoot);
+        if (this->m_treeRoot) 
+            if (!this->deleteTree(this->m_treeRoot))
+                std::cout << "Could not delete tree, possible memory leaks!\n";
         this->m_treeRoot = result;
     }
     else
@@ -76,22 +75,17 @@ auto Tree<T>::getTree(void)->std::shared_ptr<TreeNode<T>> {return this->m_treeRo
 
 template<typename T>
 auto Tree<T>::searchTree(std::shared_ptr<TreeNode<T>> root, std::string name)->std::shared_ptr<TreeNode<T>> {
-    if (this->m_treeIDMapDirty) {
-        // Check if root is null.
-        if (root == nullptr) return nullptr;
-        // Check if passed node is the searched node.
-        if (root->s_name == name)
-            return root;
-        // Check if one of the childs is the searched node.
-        for (auto item : root->s_childs) {
-            auto result = this->searchTree(item, name);
-            if (result->s_name == name)
-                return result;
-        }
+    // Check if root is null.
+    if (root == nullptr) return nullptr;
+    // Check if passed node is the searched node.
+    if (root->s_name == name)
+        return root;
+    // Check if one of the childs is the searched node.
+    for (auto item : root->s_childs) {
+        auto result = this->searchTree(item, name);
+        if (result->s_name == name)
+            return result;
     }
-    else
-        return this->m_treeNodes[this->m_treeIDMap[name]];
-
     return std::make_shared<TreeNode<T>>(TreeNode<T>());
 }
 
@@ -99,18 +93,23 @@ template<typename T>
 auto Tree<T>::deleteTree(std::shared_ptr<TreeNode<T>> root)->bool {
     // Delete it's childs first.
     for (auto item : root->s_childs)
-        if (item && !this->deleteTree(item))
+        if (!this->deleteTree(item))
             std::cout << "Couldn't delete node. Memory Leaks may occur!";
 
-    // Delete current node.
-    // TODO: Find how-to do it here.
-    
+    // Remove parent link, if and only if it is not a root node.
+    if (root->s_parent != nullptr)
+        for (unsigned int i = 0; i < root->s_parent->s_childs.size(); i++)
+            if (root->s_parent->s_childs[i] == root)
+                root->s_parent->s_childs.erase(std::begin(root->s_parent->s_childs)+i);
+
     // Find node and remove it from node array.
     for (unsigned int i = 0; i < this->m_treeNodes.size(); i++)
-        if (this->m_treeNodes[i]->s_name == root->s_name) {
+        if (this->m_treeNodes[i] == root)
             this->m_treeNodes.erase(std::begin(this->m_treeNodes)+i);
-            this->m_treeIDMapDirty = true;
-        }
+
+    // Delete current node.
+    root.reset();
+
     return true;
 }
 

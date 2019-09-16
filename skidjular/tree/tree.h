@@ -7,6 +7,8 @@
 #include <map>
 #include <memory>
 
+#define TREE_DIRTY_ACCESS_MAX_CNT 3
+
 template<typename T>
 struct TreeNode {
     std::string s_name;
@@ -35,15 +37,14 @@ class Tree {
         auto getTree(void)->std::shared_ptr<TreeNode<T>>;
 
         auto printTree(std::shared_ptr<TreeNode<T>> root)->void;
+
+        auto tidyTree(void)->void;
     private:
         auto deleteTree(std::shared_ptr<TreeNode<T>> root)->bool;
         auto printTree(std::shared_ptr<TreeNode<T>> root, int deep)->void;
     private:
         std::shared_ptr<TreeNode<T>> m_treeRoot;
         std::vector<std::shared_ptr<TreeNode<T>>> m_treeNodes;
-
-        std::map<std::string, int> m_treeIDMap;
-        bool m_treeIDMapDirty = false;
 };
 
 #include "tree.tpp"
