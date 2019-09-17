@@ -91,6 +91,9 @@ auto Tree<T>::searchTree(std::shared_ptr<TreeNode<T>> root, std::string name)->s
 
 template<typename T>
 auto Tree<T>::deleteTree(std::shared_ptr<TreeNode<T>> root)->bool {
+    // Don't delete if it is nullptr
+    if (root == nullptr) return false;
+
     // Delete it's childs first.
     for (auto item : root->s_childs)
         if (!this->deleteTree(item))
