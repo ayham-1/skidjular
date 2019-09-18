@@ -34,6 +34,7 @@ class Tree {
 
         auto addNode(std::string parent_name, std::string node_name, T data)->bool;
         auto addNode(TreeNode<T> node)->bool;
+        auto addNode(std::shared_ptr<TreeNode<T>> node)->bool;
 
         auto remNode(TreeNode<T> node)->bool;
         auto remNode(int index)->bool;

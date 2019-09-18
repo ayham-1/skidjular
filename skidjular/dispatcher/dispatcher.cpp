@@ -34,8 +34,8 @@ auto Dispatcher::addArgument(std::vector<std::string> argument, disfunc func)->v
         TreeNode<disfunc> node;
         node.s_name = argument[i];
         node.s_parent = parent_node;
-        parent_node = node;
         this->m_argumentMap.addNode(node);
+        parent_node = this->m_argumentMap.searchTree(node);
     }
     // Create the last new node.
     { // Force variable to be local to a scope.

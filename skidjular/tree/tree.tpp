@@ -3,6 +3,57 @@
 template<typename T>
 Tree<T>::Tree(void) {}
 template<typename T>
+Tree<T>::~Tree(void) {
+   this->deleteTree(this->m_treeRoot);
+}
+
+template<typename T>
+auto Tree<T>::addNode(std::string parent_name, std::string node_name, T data)->bool {
+    std::shared_ptr<TreeNode<T>> result = std::make_shared<TreeNode<T>>(TreeNode<T>());
+    // Fill data for new node.
+    result->s_name = node_name;
+    result->s_data = data;
+
+    // Check if new node is a root node.
+    if (parent_name == "") {
+        if (this->m_treeRoot) 
+            if (!this->deleteTree(this->m_treeRoot))
+                std::cout << "Couldn't delete tree, possible memory leaks!\n";
+        this->m_treeRoot = result;
+    }
+    else {
+        // Find parent for new node.
+        result->s_parent = this->searchTree(this->getTree(), parent_name);
+
+        // Add new node as child of parent node, if and only if it's not a root node.
+        result->s_parent->s_childs.push_back(result);
+    }
+
+    // Add new Node to node array.
+    this->m_treeNodes.push_back(result);
+
+    return true;
+}
+template<typename T>
+auto Tree<t>::addNode(std::shared_ptr<TreeNode<T>> node)->bool {
+    // Add new Node to node array.
+    this->m_treeNodes.push_back(node);
+}
+template<typename T>
+auto Tree<T>::addNode(TreeNode<T> node)->bool {
+    // Add new Node to node array.
+    std::shared_ptr<TreeNode<T>> result = std::make_shared<TreeNode<T>>(node);
+    this->m_treeNodes.push_back(result);
+
+    // Check if new node is a root node.
+    if (result->s_name == "") {
+        if (this->m_treeRoot) 
+            if (!this->deleteTree(this->m_treeRoot))
+                std::cout << "Could not delete tree, possible memory leaks!\n";
+        this->m_treeRoot = result;
+    }
+    else
+        // Add new node as child of parent node, if and only if it's not a root node.
         result->s_parent->s_childs.push_back(result);
 
     return true;
