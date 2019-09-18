@@ -6,14 +6,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
 #include <functional>
+
+#include "../tree/tree.h"
 
 #define disfunc_ret bool
 #define disfunc_ret_fail false
 #define disfunc_ret_success true
 #define disfunc_arg 
-//#define disfunc std::function<disfunc_ret(disfunc_arg)>
 using disfunc = std::function<disfunc_ret(disfunc_arg)>;
 
 class Dispatcher {
@@ -26,6 +26,6 @@ class Dispatcher {
         auto addArgument(std::vector<std::string> argument, disfunc func)->void;
     private:
         std::vector<std::string> m_parsedArgs;
-        std::map<std::vector<std::string>, std::string> m_argumentArr;
+        Tree<disfunc> m_argumentMap;
 };
 #endif

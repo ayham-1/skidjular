@@ -7,8 +7,6 @@
 #include <map>
 #include <memory>
 
-#define TREE_DIRTY_ACCESS_MAX_CNT 3
-
 template<typename T>
 struct TreeNode {
     std::string s_name;
@@ -17,6 +15,15 @@ struct TreeNode {
     std::vector<std::shared_ptr<TreeNode<T>>> s_childs;
 
     T s_data;
+
+    bool operator==(const TreeNode<T>& left) {
+        if (this->s_name == left.s_name) 
+            if (this->s_parent == left.s_parent)
+                if (this->s_childs == left.s_childs)
+                    if (this->s_data == left.s_data)
+                        return true;
+        return false;
+    }
 };
 
 template<typename T>
@@ -33,6 +40,7 @@ class Tree {
         auto remNode(std::string name)->bool;
 
         auto searchTree(std::shared_ptr<TreeNode<T>> root, std::string name)->std::shared_ptr<TreeNode<T>>;
+        auto searchTree(std::shared_ptr<TreeNode<T>> root, TreeNode<T> node)->std::shared_ptr<TreeNode<T>>;
 
         auto getTree(void)->std::shared_ptr<TreeNode<T>>;
 

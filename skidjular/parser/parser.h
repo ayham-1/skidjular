@@ -8,7 +8,7 @@
 
 class Parser {
     public:
-        Parser(int argc, char** args);
+        Parser(int argc, char* args[]);
         ~Parser(void);
         
         auto get()->std::vector<std::string>;

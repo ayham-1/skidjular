@@ -3,55 +3,6 @@
 template<typename T>
 Tree<T>::Tree(void) {}
 template<typename T>
-Tree<T>::~Tree(void) {
-   this->deleteTree(this->m_treeRoot);
-}
-
-template<typename T>
-auto Tree<T>::addNode(std::string parent_name, std::string node_name, T data)->bool {
-    std::shared_ptr<TreeNode<T>> result = std::make_shared<TreeNode<T>>(TreeNode<T>());
-    // Fill data for new node.
-    result->s_name = node_name;
-    result->s_data = data;
-
-    // Check if new node is a root node.
-    if (parent_name == "") {
-        if (this->m_treeRoot) 
-            if (!this->deleteTree(this->m_treeRoot))
-                std::cout << "Couldn't delete tree, possible memory leaks!\n";
-        this->m_treeRoot = result;
-    }
-    else {
-        // Find parent for new node.
-        result->s_parent = this->searchTree(this->getTree(), parent_name);
-
-        // Add new node as child of parent node, if and only if it's not a root node.
-        result->s_parent->s_childs.push_back(result);
-    }
-
-    // Add new Node to node array.
-    this->m_treeNodes.push_back(result);
-
-    return true;
-}
-template<typename T>
-auto Tree<T>::addNode(TreeNode<T> node)->bool {
-    // Add new Node to node array.
-    std::shared_ptr<TreeNode<T>> result = std::make_shared<TreeNode<T>>(node);
-    this->m_treeNodes.push_back(result);
-
-    // Add new Node to nodeId map.
-    this->m_treeIDMap.insert(std::make_pair(result->s_name, (int)(m_treeNodes.size()-1)));
-
-    // Check if new node is a root node.
-    if (result->s_name == "") {
-        if (this->m_treeRoot) 
-            if (!this->deleteTree(this->m_treeRoot))
-                std::cout << "Could not delete tree, possible memory leaks!\n";
-        this->m_treeRoot = result;
-    }
-    else
-        // Add new node as child of parent node, if and only if it's not a root node.
         result->s_parent->s_childs.push_back(result);
 
     return true;
@@ -72,6 +23,21 @@ auto Tree<T>::remNode(std::string name)->bool {
 
 template<typename T>
 auto Tree<T>::getTree(void)->std::shared_ptr<TreeNode<T>> {return this->m_treeRoot;}
+
+template<typename T>
+auto Tree<T>::searchTree(<std::shard_ptr<TreeNode<T>> root, TreeNode<T> node)->std::shared_ptr<TreeNode<T>> {
+    // Check if root is null.
+    if (root == nullptr) return nullptr;
+    // Check if passed node is the searched node.
+    if (*root == node) return root;
+    // Check if one of the childs is the searched node.
+    for (auto item : root->s_childs) {
+        auto result = this->searchTree(item, node);
+        if (*result == node)
+            return result;
+    }
+    return std::make_shared<TreeNode<T>>(TreeNode<T>());
+}
 
 template<typename T>
 auto Tree<T>::searchTree(std::shared_ptr<TreeNode<T>> root, std::string name)->std::shared_ptr<TreeNode<T>> {
