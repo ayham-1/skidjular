@@ -15,7 +15,7 @@ int main(int argc, char* args[]) {
     Parser parser(argc, args);
     for (auto item : parser.get()) std::cout << item << "\n";
 
-//    Dispatcher dis(parser.get());
+    Dispatcher dis(parser.get());
     auto func = std::bind(testfunc);
     dis.addArgument({"skidjular", "test"}, func);
     return 0;

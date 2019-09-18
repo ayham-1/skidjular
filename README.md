@@ -21,19 +21,19 @@ $ nix-shell
 ##### Install prerequisities of the project on ```ubuntu```:
 
 ```shell
-$ sudo apt install cmake gcc ninja-build
+$ sudo apt install cmake gcc
 ```
 
 ##### Install prerequisities of the project on ```arch```:
 
 ```shell
-$ pacman -S cmake gcc ninja-build
+$ pacman -S cmake gcc
 ```
 
 ##### Install prerequisites of the project on ```gentoo```:
 
 ```shell
-# sudo emerege --ask sys-devel/gcc sys-devel/make dev-util/cmake dev-util/ninja
+# sudo emerege --ask sys-devel/gcc sys-devel/make dev-util/cmake
 ```
 
 #### Building

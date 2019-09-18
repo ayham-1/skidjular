@@ -5,7 +5,6 @@ with import <nixpkgs> {}; {
             stdenv
             cmake
             gcc
-            ninja
         ];
     };
 }

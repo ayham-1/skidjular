@@ -35,9 +35,10 @@ auto Tree<T>::addNode(std::string parent_name, std::string node_name, T data)->b
     return true;
 }
 template<typename T>
-auto Tree<t>::addNode(std::shared_ptr<TreeNode<T>> node)->bool {
+auto Tree<T>::addNode(std::shared_ptr<TreeNode<T>> node)->bool {
     // Add new Node to node array.
     this->m_treeNodes.push_back(node);
+    return true;
 }
 template<typename T>
 auto Tree<T>::addNode(TreeNode<T> node)->bool {
@@ -76,7 +77,7 @@ template<typename T>
 auto Tree<T>::getTree(void)->std::shared_ptr<TreeNode<T>> {return this->m_treeRoot;}
 
 template<typename T>
-auto Tree<T>::searchTree(<std::shard_ptr<TreeNode<T>> root, TreeNode<T> node)->std::shared_ptr<TreeNode<T>> {
+auto Tree<T>::searchTree(std::shared_ptr<TreeNode<T>> root, TreeNode<T> node)->std::shared_ptr<TreeNode<T>> {
     // Check if root is null.
     if (root == nullptr) return nullptr;
     // Check if passed node is the searched node.
