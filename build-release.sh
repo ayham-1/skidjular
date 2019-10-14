@@ -3,5 +3,5 @@
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-ninja -j8
+make -j9
 cd ..
