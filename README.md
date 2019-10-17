@@ -67,7 +67,7 @@ TODO: Add an actuall CONTRIBUTING.md file.
 
 ## Authors
 
-* **Ayham Mamoun** - *Initial Work* - [Profile](https://gitlab.com/ayhamaboualfadl)
+* **realaltffour** - *Initial Work* - [Profile](https://gitlab.com/realaltffour)
 
 ## License
 
