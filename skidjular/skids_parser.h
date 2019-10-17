@@ -7,13 +7,9 @@
 #include <map>
 #include <functional>
 
-#include "skidjular_funcs.h"
+#include "skids_funcs.h"
 
 namespace skidsParser {
-    static std::string nameRegister = "";
-    static std::string dayRegister = "";
-    static std::string optRegister = "";
-
     namespace special {
         constexpr auto name = "$name";
         constexpr auto day = "$day";
@@ -42,6 +38,25 @@ namespace skidsParser {
             constexpr auto setInteractive2 = "skids set interactive";
         }
     }
+
+    const static std::array<std::pair<std::string, skidsFunc>, 17> s_funcMap = {{
+        { std::make_pair(skidsParser::cmds::init, cmds_init) },
+        { std::make_pair(skidsParser::cmds::history, cmds_history) },
+        { std::make_pair(skidsParser::cmds::info, cmds_info) },
+        { std::make_pair(skidsParser::cmds::proj::add, cmds_proj_add) },
+        { std::make_pair(skidsParser::cmds::proj::rm, cmds_proj_rm) },
+        { std::make_pair(skidsParser::cmds::proj::list1, cmds_proj_list) },
+        { std::make_pair(skidsParser::cmds::proj::list2, cmds_proj_list) },
+        { std::make_pair(skidsParser::cmds::skids::init, cmds_skids_init) },
+        { std::make_pair(skidsParser::cmds::skids::initNow, cmds_skids_initNow) },
+        { std::make_pair(skidsParser::cmds::skids::now, cmds_skids_now) },
+        { std::make_pair(skidsParser::cmds::skids::set, cmds_skids_set) },
+        { std::make_pair(skidsParser::cmds::skids::setThis, cmds_skids_setThis) },
+        { std::make_pair(skidsParser::cmds::skids::setLazy, cmds_skids_setLazy) },
+        { std::make_pair(skidsParser::cmds::skids::setThisLazy, cmds_skids_setThisLazy) },
+        { std::make_pair(skidsParser::cmds::skids::setInteractive1, cmds_skids_setInteractive) },
+        { std::make_pair(skidsParser::cmds::skids::setInteractive2, cmds_skids_setInteractive) }
+        }};
 }
 
 #endif
