@@ -7,56 +7,78 @@
 #include <map>
 #include <functional>
 
-#include "skids_funcs.h"
+#include "skids_parserdef.h"
 
 namespace skidsParser {
-    namespace special {
-        constexpr auto name = "$name";
-        constexpr auto day = "$day";
-        constexpr auto opt = "$opt";
+    static void printHelp(void) {
+        std::cout << "This is help to be implemented." << std::endl;
     }
-    namespace cmds {
-        constexpr auto init = "init";
-        constexpr auto history = "history";
-        constexpr auto info = "info";
-        namespace proj {
-            constexpr auto add = "proj add $name";
-            constexpr auto rm = "proj rm $name";
-            constexpr auto list1 = "proj ls";
-            constexpr auto list2 = "proj list";
-        }
-        namespace skids {
-            constexpr auto init = "skids init";
-            constexpr auto initNow = "skids init now";
-            constexpr auto now = "skids now";
-            constexpr auto This = "skids this";
-            constexpr auto set = "skids set $day $name";
-            constexpr auto setThis = "skids set this $day $name";
-            constexpr auto setLazy = "skids set lazy";
-            constexpr auto setThisLazy = "skids set this lazy";
-            constexpr auto setInteractive1 = "skids set i";
-            constexpr auto setInteractive2 = "skids set interactive";
+
+    static void dispatch(Command cmd) {
+        try {
+        auto index = skidsParser::s_funcsIDMap.at(cmd.s_cmd);
+        auto f = skidsParser::s_funcsArr[index];
+        f();
+        } catch (const std::exception& e) {
+            std::cout << "ERROR: Could not dispatch command: " << cmd.s_cmd << "." << std::endl;
+            printHelp();
+            exit(1);
         }
     }
 
-    const static std::array<std::pair<std::string, skidsFunc>, 17> s_funcMap = {{
-        { std::make_pair(skidsParser::cmds::init, cmds_init) },
-        { std::make_pair(skidsParser::cmds::history, cmds_history) },
-        { std::make_pair(skidsParser::cmds::info, cmds_info) },
-        { std::make_pair(skidsParser::cmds::proj::add, cmds_proj_add) },
-        { std::make_pair(skidsParser::cmds::proj::rm, cmds_proj_rm) },
-        { std::make_pair(skidsParser::cmds::proj::list1, cmds_proj_list) },
-        { std::make_pair(skidsParser::cmds::proj::list2, cmds_proj_list) },
-        { std::make_pair(skidsParser::cmds::skids::init, cmds_skids_init) },
-        { std::make_pair(skidsParser::cmds::skids::initNow, cmds_skids_initNow) },
-        { std::make_pair(skidsParser::cmds::skids::now, cmds_skids_now) },
-        { std::make_pair(skidsParser::cmds::skids::set, cmds_skids_set) },
-        { std::make_pair(skidsParser::cmds::skids::setThis, cmds_skids_setThis) },
-        { std::make_pair(skidsParser::cmds::skids::setLazy, cmds_skids_setLazy) },
-        { std::make_pair(skidsParser::cmds::skids::setThisLazy, cmds_skids_setThisLazy) },
-        { std::make_pair(skidsParser::cmds::skids::setInteractive1, cmds_skids_setInteractive) },
-        { std::make_pair(skidsParser::cmds::skids::setInteractive2, cmds_skids_setInteractive) }
-        }};
+    [[nodiscard]] static bool isKnownKeyWord(const std::string word) {
+        if (word == special::keywords::init)
+            return true;
+        else if (word == special::keywords::history)
+            return true;
+         else if (word == special::keywords::info)
+            return true;
+        else if (word == special::keywords::proj)
+            return true;
+        else if (word == special::keywords::add)
+            return true;
+        else if (word == special::keywords::rm)
+            return true;
+        else if (word == special::keywords::list1)
+            return true;
+        else if (word == special::keywords::list2)
+            return true;
+        else if (word == special::keywords::skids)
+            return true;
+        else if (word == special::keywords::now)
+            return true;
+        else if (word == special::keywords::This)
+            return true;
+        else if (word == special::keywords::set)
+            return true;
+        else if (word == special::keywords::lazy)
+            return true;
+        else if (word == special::keywords::interactive1)
+            return true;
+        else if (word == special::keywords::interactive2)
+            return true;
+        return false;
+    }
+
+    [[nodiscard]] static auto buildCmd(int argc, char *argv[]) {
+        std::vector<std::string> args;
+        Command result;
+        for (int i = 1; i < argc; i++)
+            args.push_back(argv[i]);
+        
+        std::string cmd;
+        for (auto term : args) {
+            if (isKnownKeyWord(term))
+                cmd += term;
+            else if (result.s_name1Reg == "")
+                result.s_name1Reg = term;
+            else if (result.s_name2Reg == "")
+                result.s_name1Reg = term;
+        }
+
+        result.s_cmd = cmd;
+        return result;
+    }
 }
 
 #endif
