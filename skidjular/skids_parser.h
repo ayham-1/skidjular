@@ -11,7 +11,37 @@
 
 namespace skidsParser {
     static void printHelp(void) {
-        std::cout << "This is help to be implemented." << std::endl;
+        std::cout << 
+        "Commands:\n"
+        "skidjular init\n"
+            "\tcreates a skidjular directory in $(pwd)\n"
+        "skidjular proj add $(name)\n"
+            "\tAdds $(name) to list of projects.\n"
+        "skidjular proj rm $(name)\n"
+            "\tRemoves $(name) from list of projects.\n"
+        "skidjular proj list/ls\n"
+            "\tOutputs to stdout the project list.\n"
+        "skidjular skids init\n"
+            "\tcreates the next uncreated week.\n"
+        "skidjular skids init now\n"
+            "\tForce creates the week.\n"
+        "skidjular skids this\n"
+            "\tOutputs to stdout this week's project.\n"
+        "skidjular skids set $(day) $(proj)\n"
+            "\tSets this week's $(day) to $(proj)\n"
+        "skidjular skids set $(day) $(proj)\n"
+            "\tSets this week's $(day) to $(proj)\n"
+        "skidjular skids set this lazy\n"
+            "\tForce sets this week's project automatically.\n"
+        "skidjular skids set lazy\n"
+            "\tSets next unset week's projects automatically.\n"
+        "skidjular set i/interactive\n"
+            "\tsets next unset week's projects interactively.\n"
+        "skidjular history\n"
+            "\toutputs to stdout the history.\n"
+        "skidjular info\n"
+            "\toutpus to stdout information about skids directory"  
+        << std::endl;
     }
 
     static void dispatch(Command cmd) {
