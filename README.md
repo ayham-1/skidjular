@@ -8,7 +8,7 @@ To download a release, go the the releases page.
 
 ### Building from source
 
-Download the soure from the git repository(not this might not be stable).
+Download the soure from the git repository (Note: this might not be stable).
 
 #### Prerequisites
 
@@ -42,14 +42,14 @@ For release:
 
 ```shell
 $  nix-shell
-$ ./build-release.sh
+$ ./buildRelease.sh
 ```
 
 For debug:
 
 ```shell
 $  nix-shell
-$ ./build-debug.sh
+$ ./build.sh
 ```
 
 #### Cleaning the directory
