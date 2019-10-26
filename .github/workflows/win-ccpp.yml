@@ -11,7 +11,5 @@ jobs:
     - name: build
       run: |
         mkdir build
-        cd build
-        cmake -DCMAKE_BUILD_TYPE=Debug ..
-        dir
-        make -j9
+        cmake -DCMAKE_BUILD_TYPE=Debug build/
+        (cd build && make -j9)
