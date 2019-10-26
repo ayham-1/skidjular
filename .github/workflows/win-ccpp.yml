@@ -1,6 +1,6 @@
 name: Windows C/C++ CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -9,4 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: build
-      run: sh build.sh && dir
+      run: |
+        sh build.sh
+        dir
