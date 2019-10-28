@@ -9,4 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: build
-      run: sh build.sh
+      run: |
+        cmake -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Debug .
+        make -j9
