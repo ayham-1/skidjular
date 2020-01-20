@@ -40,7 +40,7 @@ namespace skidsParser {
         "skidjular history\n"
             "\toutputs to stdout the history.\n"
         "skidjular info\n"
-            "\toutpus to stdout information about skids directory"  
+            "\toutputs to stdout information about skids directory"  
         << std::endl;
     }
 
@@ -96,7 +96,7 @@ namespace skidsParser {
         for (int i = 1; i < argc; i++)
             args.push_back(argv[i]);
         
-        std::string cmd;
+        std::string cmd = "";
         for (auto term : args) {
             if (isKnownKeyWord(term))
                 cmd += term;
