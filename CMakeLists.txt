@@ -24,9 +24,9 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
 # skidjular
-file(GLOB_RECURSE skidjular_hdrs "skidjular/*.h")
-file(GLOB_RECURSE skidjular_srcs "skidjular/*.cpp")
+file(GLOB_RECURSE skidjular_hdrs "src/*.h")
+file(GLOB_RECURSE skidjular_srcs "src/*.cpp")
 
-include_directories("skidjular/")
+include_directories("src/")
 
 add_executable(skidjular ${skidjular_hdrs} ${skidjular_srcs}) 
