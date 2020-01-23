@@ -15,6 +15,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -Wall -Werror -Wno-unused-function")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -Wall -Werror -Wno-unused-function")
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
 # Set build type definitions.
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-D__DEBUG__)
@@ -30,3 +33,4 @@ file(GLOB_RECURSE skidjular_srcs "src/*.cpp")
 include_directories("src/")
 
 add_executable(skidjular ${skidjular_hdrs} ${skidjular_srcs}) 
+target_link_libraries(skidjular ${CONAN_LIBS})
