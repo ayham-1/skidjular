@@ -1,34 +1,50 @@
 #include <boost/program_options.hpp>
+#include <string>
+#include <vector>
 #include <iostream>
-
-void on_age(int age) {
-  std::cout << "On age: " << age << '\n';
-}
 
 int main(int argc, const char* argv[]) {
     using namespace boost::program_options;
+    using namespace std;
 
     try {
-        options_description desc{"Options"};
-        desc.add_options()
-            ("help,h", "Help screen")
-            ("pi", value<float>()->default_value(3.14f), "Pi")
-            ("age", value<int>()->notifier(on_age), "Age");
+        options_description general("General Options.");
+        general.add_options()
+            ("help", "Help Message")
+            ("help-module", value<string>(), 
+             "Module for help message")
+            ;
+        positional_options_description general_positional;
+        general_positional.add("help", 1);
+        general_positional.add("help-module", -1);
 
+        options_description init("Init Module.");
+        general.add_options()
+            ("help", "Help Message")
+            ("location", value<string>(), "Initial location");
+        positional_options_description init_positional;
+        init_positional.add("location", -1);
+
+        options_description all("Allowed Options");
+        all.add(general).add(init);
+        
         variables_map vm;
-        store(parse_command_line(argc, argv, desc), vm);
+        store(command_line_parser(argc, argv)
+                .options(all)
+                .positional(general_positional)
+                //.positional(init_positional)
+                .run(), vm);
         notify(vm);
 
-        if (vm.count("help"))
-            std::cout << desc << '\n';
-        else if (vm.count("age"))
-            std::cout << "Age: " << vm["age"].as<int>() << '\n';
-        else if (vm.count("pi"))
-            std::cout << "Pi: " << vm["pi"].as<float>() << '\n';
+        if (vm.count("help")) {
+            auto module = vm["help-module"].as<string>();
+            if (module == "init")
+                std::cout << "Hello";
+        } 
+
     }
-    catch (const error &ex)
-    {
-        std::cerr << ex.what() << '\n';
+    catch (const error &ex) {
+        cerr << ex.what() << '\n';
     }
 
     return 0;
