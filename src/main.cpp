@@ -19,8 +19,7 @@ int main(int argc, const char* argv[]) {
         general_positional.add("help-module", -1);
 
         options_description init("Init Module.");
-        general.add_options()
-            ("help", "Help Message")
+        init.add_options()
             ("location", value<string>(), "Initial location");
         positional_options_description init_positional;
         init_positional.add("location", -1);
@@ -29,11 +28,7 @@ int main(int argc, const char* argv[]) {
         all.add(general).add(init);
         
         variables_map vm;
-        store(command_line_parser(argc, argv)
-                .options(all)
-                .positional(general_positional)
-                //.positional(init_positional)
-                .run(), vm);
+        store(parse_command_line(argc, argv, all), vm);
         notify(vm);
 
         if (vm.count("help")) {
@@ -41,7 +36,6 @@ int main(int argc, const char* argv[]) {
             if (module == "init")
                 std::cout << "Hello";
         } 
-
     }
     catch (const error &ex) {
         cerr << ex.what() << '\n';
