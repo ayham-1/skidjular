@@ -7,6 +7,10 @@
 
 #define MODFN(name, code) \
     void name(std::string arguments) {code}
+#define MODFNSIG(name) \
+    void name(std::string arguments);
+#define MODFNIMPL(name, code) \
+    void name(std::string arguments) {code};
 #define MODDISPATCHFN(name, code) \
     void name(std::string arguments) {code}
 #define MODARGS(name, code) \
