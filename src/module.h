@@ -15,8 +15,8 @@
     void name(std::string arguments) {code}
 #define MODARGS(name, code) \
     struct name {code};
-#define MAKEMOD(name, argsname) \
-    struct name : argsname {argsname _args;};
+#define MAKEMOD(argsname) \
+    struct _mod : argsname {argsname _args;};
 
 using ModuleFn = std::function<void(std::string arguments)>;
 using ModuleFnDispatcher = std::function<void(std::string arguments)>;
