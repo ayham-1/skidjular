@@ -5,10 +5,14 @@
 
 #include "module.h"
 
+#include "modules/init.h"
+
 int main(int argc, const char* argv[]) {
     using namespace boost::program_options;
     using namespace std;
-    std::map<string, Module> modules;
+    std::map<string, Module> lmodules;
+    modules::init::_mod init;
+    lmodules["init"] = init;
 
     try {
         options_description general("General Options.");
@@ -33,32 +37,30 @@ int main(int argc, const char* argv[]) {
         if (vm.count("help")) {
             if (vm.count("help-module")) {
                 auto name = vm["help-module"].as<string>();
-                if (modules.find(name) == modules.end()) {
+                if (lmodules.find(name) == lmodules.end()) {
                     std::cout << "Module not found.\n";
                     exit(1);
                 }
-                auto module = modules[name];
+                auto module = lmodules[name];
                 std::cout << module._desc << "\n";
             }
             else std::cout << general << "\n";
             exit(0);
-        } 
-
-        if (vm.count("module")) {
+        } else if (vm.count("module")) {
             auto name = vm["module"].as<string>();
 
-            if (modules.find(name) == modules.end()) {
+            if (lmodules.find(name) == lmodules.end()) {
                 std::cout << "Module not found.\n";
                 exit(1);
             }
-
-            auto module = modules[name];
+            auto module = lmodules[name];
             auto args = string{""};
 
             if (vm.count("module-args"))
                 args = vm["module-args"].as<string>();
 
-            module._dispatcher(args);
+            if (args != "")
+                module._dispatcher(args);
         }
     }
     catch (const error &ex) {

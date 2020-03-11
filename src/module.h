@@ -10,13 +10,19 @@
 #define MODFNSIG(name) \
     void name(std::string arguments);
 #define MODFNIMPL(name, code) \
-    void name(std::string arguments) {code};
+    void name(std::string arguments) {code}
+
 #define MODDISPATCHFN(name, code) \
     void name(std::string arguments) {code}
-#define MODARGS(name, code) \
-    struct name {code};
-#define MAKEMOD(argsname) \
-    struct _mod : argsname {argsname _args;};
+#define MODDISPATCHFNSIG(name) \
+    void name(std::string arguments); 
+#define MODDISPATCHFNIMPL(name, code) \
+    void name(std::string arguments) {code}
+
+#define MODARGS(code) \
+    struct _args {code}
+#define MAKEMOD() \
+    struct _mod : _args, Module {}
 
 using ModuleFn = std::function<void(std::string arguments)>;
 using ModuleFnDispatcher = std::function<void(std::string arguments)>;
