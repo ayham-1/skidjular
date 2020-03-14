@@ -8,13 +8,12 @@ namespace modules {
         MODARGS(
                 std::string _location;
                ); 
-        MODDISPATCHFNSIG(init__dispatch);
+        MAKEMOD(MODFNSIG(init__create);
+                MODDISPATCHFN();
+                DEFMOD("init", 
+                        "Creates a skidjular directory in $(pwd)");
+                );
 
-        MODFNSIG(init__create);
-
-        MAKEMOD(DEFMOD("init", 
-                    "Creates a skidjular directory in $(pwd)",
-                    init__dispatch));
     };
 };
 

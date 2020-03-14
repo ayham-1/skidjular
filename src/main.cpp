@@ -10,9 +10,8 @@
 int main(int argc, const char* argv[]) {
     using namespace boost::program_options;
     using namespace std;
-    std::map<string, Module> lmodules;
-    modules::init::_mod init;
-    lmodules["init"] = init;
+    std::map<string, Module*> lmodules;
+    lmodules["init"] = new modules::init::_mod;
 
     try {
         options_description general("General Options");
@@ -44,7 +43,7 @@ int main(int argc, const char* argv[]) {
                 exit(1);
             }
             auto module = lmodules[name];
-            std::cout << module._desc << "\n";
+            std::cout << module->_desc << "\n";
         }
         else if (vm.count("module")) {
             auto name = vm["module"].as<string>();
@@ -60,7 +59,7 @@ int main(int argc, const char* argv[]) {
                 args = vm["module-args"].as<string>();
 
             if (args != "")
-                module._dispatcher(args);
+                module->dispatch(args);
         }
         else {
             std::cout << general << "\n";

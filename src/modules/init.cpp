@@ -6,8 +6,7 @@ namespace modules {
         MODFNIMPL(init_create, {
                 std::cout << "CREATE";
                 });
-
-        MODDISPATCHFNIMPL(init__dispatch, {
+        MODDISPATCHFNIMPL({
                 std::cout << arguments;
                 });
     }
