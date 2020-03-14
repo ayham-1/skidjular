@@ -21,8 +21,14 @@
 
 #define MODARGS(code) \
     struct _args {code}
-#define MAKEMOD() \
-    struct _mod : _args, Module {}
+#define MAKEMOD(code) \
+    struct _mod : _args, Module {code}
+#define DEFMOD(name, desc, dispatcher) \
+    _mod() { \
+        this->_name = name; \
+        this->_desc = desc; \
+        this->_dispatcher = dispatcher; \
+    } \
 
 using ModuleFn = std::function<void(std::string arguments)>;
 using ModuleFnDispatcher = std::function<void(std::string arguments)>;

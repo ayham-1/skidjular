@@ -15,7 +15,7 @@ int main(int argc, const char* argv[]) {
     lmodules["init"] = init;
 
     try {
-        options_description general("General Options.");
+        options_description general("General Options");
         general.add_options()
             ("help", "Help Message")
             ("help-module", value<string>(), 
@@ -35,18 +35,18 @@ int main(int argc, const char* argv[]) {
         notify(vm);
 
         if (vm.count("help")) {
-            if (vm.count("help-module")) {
-                auto name = vm["help-module"].as<string>();
-                if (lmodules.find(name) == lmodules.end()) {
-                    std::cout << "Module not found.\n";
-                    exit(1);
-                }
-                auto module = lmodules[name];
-                std::cout << module._desc << "\n";
-            }
-            else std::cout << general << "\n";
+            std::cout << general << "\n";
             exit(0);
-        } else if (vm.count("module")) {
+        } else if (vm.count("help-module")) {
+            auto name = vm["help-module"].as<string>();
+            if (lmodules.find(name) == lmodules.end()) {
+                std::cout << "Module not found.\n";
+                exit(1);
+            }
+            auto module = lmodules[name];
+            std::cout << module._desc << "\n";
+        }
+        else if (vm.count("module")) {
             auto name = vm["module"].as<string>();
 
             if (lmodules.find(name) == lmodules.end()) {
@@ -61,6 +61,10 @@ int main(int argc, const char* argv[]) {
 
             if (args != "")
                 module._dispatcher(args);
+        }
+        else {
+            std::cout << general << "\n";
+            exit(0);
         }
     }
     catch (const error &ex) {
