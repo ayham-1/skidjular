@@ -34,7 +34,7 @@ struct Skid {
 /////////////// END OF DATA CONTAINING STRUCTURES ////////////
 
 
-/////////////// HISTORY SYSTEM STRUCTURES ////////////////////
+/////////////// EVENT HISTORY SYSTEM STRUCTURES ////////////////////
 
 enum EventType {
     Access = 0,
@@ -54,7 +54,7 @@ struct EventLog {
     std::string _sha512 = "";
 };
 
-/////////////// END OF HISTORY SYSTEM STRUCTURES /////////////
+/////////////// EVENT END OF HISTORY SYSTEM STRUCTURES /////////////
 
 struct DB {
     std::map<std::string, Project> _projects;
