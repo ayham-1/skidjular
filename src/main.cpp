@@ -6,6 +6,7 @@
 #include "module.h"
 
 #include "modules/init.h"
+#include "data.h"
 
 int main(int argc, const char* argv[]) {
     using namespace boost::program_options;

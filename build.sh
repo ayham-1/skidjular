@@ -2,7 +2,7 @@
  
 mkdir build
 cd build
-conan install ..
+conan install .. --build missing
 cmake -DCMAKE_BUILD_TYPE=Debug ..
 make -j9
 cd ..
