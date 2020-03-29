@@ -6,7 +6,6 @@
 #include <ctime>
 #include <map>
 
-
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -18,17 +17,17 @@
 /////////////// DATA CONTAINING STRUCTURES ///////////////////
 
 struct Project {
-    std::string _name = "";
-    std::string _desc = "";
-    boost::uuids::uuid _uuid;
-    int _preferredPrior = 0;
-    time_t _creationDate;
-    bool _isDone = false;
+    std::string name = "";
+    std::string desc = "";
+    boost::uuids::uuid uuid;
+    int preferredPrior = 0;
+    time_t creationDate;
+    bool isDone = false;
 };
 
 struct Skid {
-    std::vector<Project*> _projects = {};
-    time_t _creationDate;
+    std::vector<Project*> projects = {};
+    time_t creationDate;
 };
 
 /////////////// END OF DATA CONTAINING STRUCTURES ////////////
@@ -44,24 +43,24 @@ enum EventType {
 };
 
 struct Event {
-    int _id = -1;
-    EventType _type = EventType::None;
-    std::string _mesg = "";
+    int id = -1;
+    EventType type = EventType::None;
+    std::string mesg = "";
 };
 
 struct EventLog {
-    std::vector<Event> _events;
-    std::string _sha512 = "";
+    std::vector<Event> events;
+    std::string sha512 = "";
 };
 
 /////////////// EVENT END OF HISTORY SYSTEM STRUCTURES /////////////
 
 struct DB {
-    std::map<std::string, Project> _projects;
-    EventLog _log;
-
-    time_t _creationDate;
-    time_t _lastAccessTime;
+    std::map<std::string, Project> projects;
+	EventLog log;
+	
+    time_t creationDate;
+    time_t lastAccessTime;
 };
 
 #endif

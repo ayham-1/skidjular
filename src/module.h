@@ -15,27 +15,27 @@
 #define MODDISPATCHFNSIG() \
     virtual void dispatch(std::string arguments) = 0;
 #define MODDISPATCHFNIMPL(code) \
-    void _mod::dispatch(std::string arguments) {code}
+    void mod::dispatch(std::string arguments) {code}
 #define MODDISPATCHFN() \
     void dispatch(std::string arguments) override; 
 
 #define MODARGS(code) \
-    struct _args {code}
+    struct args {code}
 #define MAKEMOD(code) \
-    struct _mod : _args, Module {code}
-#define DEFMOD(name, desc) \
-    _mod() { \
-        this->_name = name; \
-        this->_desc = desc; \
+    struct mod : args, Module {code}
+#define DEFMOD(name_, desc_) \
+    mod() { \
+        this->name = name_; \
+        this->desc = desc_; \
     } \
 
 using ModuleFn = std::function<void(std::string arguments)>;
 using ModuleFnDispatcher = std::function<void(std::string arguments)>;
 
 struct Module {
-    std::string _name;
-    std::string _desc;
-    std::map<std::string, ModuleFn> _funcs;
+    std::string name;
+    std::string desc;
+    std::map<std::string, ModuleFn> funcs;
     MODDISPATCHFNSIG();
 };
 

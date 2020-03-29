@@ -6,7 +6,7 @@
 namespace modules {
     namespace init {
         MODARGS(
-                std::string _location;
+                std::string m_location;
                ); 
         MAKEMOD(MODFNSIG(init__create);
                 MODDISPATCHFN();
