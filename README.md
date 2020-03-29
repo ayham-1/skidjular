@@ -12,29 +12,7 @@ Download the soure from the git repository (Note: this might not be stable).
 
 #### Prerequisites
 
-##### Using ```nix```:
-
-```shell
-$ nix-shell
-```
-
-##### Install prerequisities of the project on ```ubuntu```:
-
-```shell
-$ sudo apt install cmake gcc
-```
-
-##### Install prerequisities of the project on ```arch```:
-
-```shell
-$ pacman -S cmake gcc
-```
-
-##### Install prerequisites of the project on ```gentoo```:
-
-```shell
-# sudo emerege --ask sys-devel/gcc sys-devel/make dev-util/cmake
-```
+Prerequisites are provided from Conan.
 
 #### Building
 
