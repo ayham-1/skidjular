@@ -54,18 +54,18 @@ int main(int argc, const char* argv[]) {
                 exit(1);
             }
             auto module = lmodules[name];
-            auto args = string{""};
-
-            if (vm.count("module-args"))
-                args = vm["module-args"].as<string>();
-
-            if (args != "")
-                module->dispatch(args);
+            
+            if (vm.count("module-args")) {
+				auto args = vm["module-args"].as<string>();
+				module->dispatch(args);
+			} else	module->dispatch("");
         }
         else {
             std::cout << general << "\n";
             exit(0);
         }
+
+		std::cout << "Hello world";
     }
     catch (const error &ex) {
         cerr << ex.what() << '\n';

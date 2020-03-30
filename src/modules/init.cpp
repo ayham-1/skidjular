@@ -4,10 +4,12 @@
 namespace modules {
     namespace init {
         MODFNIMPL(init_create, {
-                std::cout << "CREATE";
+				std::cout << "Creating database in current directory."
+						  << std::endl;
                 });
+
         MODDISPATCHFNIMPL({
-                std::cout << arguments;
+				init_create(arguments);
                 });
     }
 };
