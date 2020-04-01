@@ -33,19 +33,7 @@ int main(int argc, const char* argv[]) {
                 .positional(general_positional)
                 .run(), vm);
         notify(vm);
-		
-		std::cout << "Hello world";
-		DB db, db2;
-		Project p1,p2;
-		p1.name = "hello";
-		p2.name = "world";
-		db.projects["hello"] = p1;
-		db.projects["world"] = p2;
-		writeDB(db, "hello.db");
-		loadDB(db2, "hello.db");
-		std::cout << "\n Loading projects: ";
-		std::cout << db2.projects["hello"].name;
-		
+				
         if (vm.count("help")) {
             std::cout << general << "\n";
             exit(0);
