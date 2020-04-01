@@ -32,19 +32,28 @@ void from_json(const json& j, Project& proj) {
 	j.at("doneDate").get_to(proj.doneDate);
 	j.at("isDone").get_to(proj.isDone);
 }
+void to_json(json& j, const Skid& skid) {
+	j = json{
+			 {"projects", *skid.projects},
+			 {"creationDate", skid.creationDate},
+	};
+}
+void from_json(const json& j, Skid& skid) {
+	j.at("projects").get_to(*skid.projects);
+	j.at("creationDate").get_to(skid.creationDate);
+}
 void to_json(json& j, const DB& db) {
 	j = json{
-			 {"projects", db.projects},
+			 {"projects", *db.projects},
 			 {"creationDate", db.creationDate},
 			 {"lastAccessTime", db.lastAccessTime}
 	};
 }
 void from_json(const json& j, DB& db) {
-	j.at("projects").get_to(db.projects);
+	j.at("projects").get_to(*db.projects);
 	j.at("creationDate").get_to(db.creationDate);
 	j.at("lastAccessTime").get_to(db.lastAccessTime);
 }
-
 
 
 void writeDB(DB db, const std::string &dest) {

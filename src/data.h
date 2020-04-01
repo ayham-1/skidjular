@@ -35,7 +35,7 @@ struct Project {
 };
 
 struct Skid {
-    std::vector<Project*> projects = {};
+    std::vector<Project> *projects = {};
     Date creationDate;
 };
 
@@ -58,7 +58,7 @@ struct Event {
 };
 
 struct EventLog {
-    std::vector<Event> events;
+    std::vector<Event> *events;
     std::string sha512 = "";
 };
 
@@ -66,7 +66,8 @@ struct EventLog {
 
 // Main Database that represents the skidjular directory.
 struct DB {
-    std::map<std::string, Project> projects;
+    std::map<std::string, Project> *projects;
+	std::vector<Skid> skids;
 	EventLog log;
 	
     Date creationDate;
