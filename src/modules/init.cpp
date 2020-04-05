@@ -1,15 +1,31 @@
 #include "init.h"
-#include <iostream> 
+
+#include "../data.h"
 
 namespace modules {
-    namespace init {
-        MODFNIMPL(init_create, {
-				std::cout << "Creating database in current directory."
-						  << std::endl;
-                });
+namespace init {
+MODFNIMPL(init_create, {
+    std::cout << "Creating database in current directory." << std::endl;
+    DB db;
+    time_t t = time(0);
+    struct tm *currentTime = localtime(&t);
 
-        MODDISPATCHFNIMPL({
-				init_create(arguments);
-                });
-    }
-};
+    db.creationDate.day = currentTime->tm_mday;
+    db.creationDate.month = currentTime->tm_mon;
+    db.creationDate.year = currentTime->tm_year;
+    db.lastAccessTime.day = currentTime->tm_mday;
+    db.lastAccessTime.month = currentTime->tm_mon;
+    db.lastAccessTime.year = currentTime->tm_year;
+
+    // Mandatory stuff to stop segmantion fault due to
+    // pointers unintialized.
+    db.projects = new std::map<std::string, Project>();
+    db.log.events = new std::vector<Event>();
+
+    // TODO: Add event logging
+    writeDB(db, ".db");
+});
+
+MODDISPATCHFNIMPL({ init_create(arguments); });
+}  // namespace init
+};  // namespace modules

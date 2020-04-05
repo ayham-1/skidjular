@@ -1,16 +1,18 @@
 #ifndef MODULE_INIT_H
 #define MODULE_INIT_H
 
+#include <time.h>
+#include <ctime>
+#include <iostream>
+
 #include "module.h"
 
 namespace modules {
     namespace init {
-        MODARGS(
-                std::string m_location;
-               ); 
-        MAKEMOD(MODFNSIG(init__create);
+        MODARGS();
+        MAKEMOD(MODFNSIG(init_create);
                 MODDISPATCHFN();
-                DEFMOD("init", 
+                DEFMOD("init",
                         "Creates a skidjular directory in $(pwd)");
                 );
 

@@ -1,36 +1,34 @@
 #ifndef DATA_H
 #define DATA_H
 
+#include <fstream>
 #include <iostream>
-
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-
-#include <fstream>
 
 #include "json.hpp"
 using nlohmann::json;
 
 #define LOC_DB = ".db"
 #define LOC_EVENTLOG = ".log"
-#define LOC_SKIDID = "skid" // used as LOC_SKIDID+SKIDNUM
+#define LOC_SKIDID = "skid"  // used as LOC_SKIDID+SKIDNUM
 
 /////////////// DATA CONTAINING STRUCTURES ///////////////////
 
 struct Date {
-	int day = 0;
-	int month = 0; // 0-11
-	int year = 0; // + 1900 for currentyear
+    int day = 0;
+    int month = 0;  // 0-11
+    int year = 0;   // + 1900 for currentyear
 };
 
 struct Project {
     std::string name = "";
     std::string desc = "";
-	std::string uuid;
+    std::string uuid;
     int pri = 0;
     Date creationDate;
-	Date doneDate;
+    Date doneDate;
     bool isDone = false;
 };
 
@@ -41,15 +39,9 @@ struct Skid {
 
 /////////////// END OF DATA CONTAINING STRUCTURES ////////////
 
-
 /////////////// EVENT HISTORY SYSTEM STRUCTURES ////////////////////
 
-enum EventType {
-    Access = 0,
-    Creation = 1,
-    Modification = 2,
-    None = -1
-};
+enum EventType { Access = 0, Creation = 1, Modification = 2, None = -1 };
 
 struct Event {
     int id = -1;
@@ -67,9 +59,9 @@ struct EventLog {
 // Main Database that represents the skidjular directory.
 struct DB {
     std::map<std::string, Project> *projects;
-	std::vector<Skid> skids;
-	EventLog log;
-	
+    std::vector<Skid> skids;
+    EventLog log;
+
     Date creationDate;
     Date lastAccessTime;
 };
