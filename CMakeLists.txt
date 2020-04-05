@@ -33,5 +33,5 @@ file(GLOB_RECURSE skidjular_srcs "src/*.cpp")
 include_directories("src/")
 include_directories("vendor/")
 
-add_executable(skidjular ${skidjular_hdrs} ${skidjular_srcs}) 
+add_executable(skidjular ${skidjular_hdrs} ${skidjular_srcs})
 target_link_libraries(skidjular ${CONAN_LIBS})
