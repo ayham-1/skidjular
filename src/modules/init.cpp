@@ -2,9 +2,7 @@
 
 #include "../data.h"
 
-namespace modules {
-namespace init {
-MODFNIMPL(init_create, {
+void init_create(init_args arg) {
     std::cout << "Creating database in current directory." << std::endl;
     DB db;
     time_t t = time(0);
@@ -24,8 +22,16 @@ MODFNIMPL(init_create, {
 
     // TODO: Add event logging
     writeDB(db, ".db");
-});
+}
 
-MODDISPATCHFNIMPL({ init_create(arguments); });
-}  // namespace init
-};  // namespace modules
+void init_dispatch() {
+    init_args arg;
+    init_create(arg);
+}
+
+init_mod init_new() {
+	init_mod mod;
+	mod.name = "Init";
+	mod.desc = "Creates skidjular directory in $(pwd)";
+	return mod;
+}
