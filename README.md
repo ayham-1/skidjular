@@ -19,14 +19,12 @@ Prerequisites are provided from Conan.
 For release:
 
 ```shell
-$  nix-shell
 $ ./buildRelease.sh
 ```
 
 For debug:
 
 ```shell
-$  nix-shell
 $ ./build.sh
 ```
 
