@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
 	  std::cout << general << "\n";
 	  exit(0);
 	} else if(vm.count("help-module")) {
-	  auto name	  = vm["help-module"].as<string>();
+	  auto name   = vm["help-module"].as<string>();
 	  auto module = get_Mod(name);
 	  if(!module) {
 		std::cout << "Module not found.\n";
@@ -47,7 +47,7 @@ int main(int argc, const char* argv[]) {
 	  }
 	  std::cout << module->desc << "\n";
 	} else if(vm.count("module")) {
-	  auto name	  = vm["module"].as<string>();
+	  auto name   = vm["module"].as<string>();
 	  auto module = get_Mod(name);
 	  if(!module) {
 		std::cout << "Module not found.\n";

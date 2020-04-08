@@ -10,16 +10,16 @@
 #include "json.hpp"
 using nlohmann::json;
 
-#define LOC_DB		 = ".db"
+#define LOC_DB = ".db"
 #define LOC_EVENTLOG = ".log"
-#define LOC_SKIDID	 = "skid" // used as LOC_SKIDID+SKIDNUM
+#define LOC_SKIDID = "skid" // used as LOC_SKIDID+SKIDNUM
 
 /////////////// DATA CONTAINING STRUCTURES ///////////////////
 
 struct Date {
-  int day	= 0;
+  int day   = 0;
   int month = 0; // 0-11
-  int year	= 0; // + 1900 for currentyear
+  int year  = 0; // + 1900 for currentyear
 };
 
 struct Project {
@@ -45,7 +45,7 @@ enum EventType { Access = 0, Creation = 1, Modification = 2, None = -1 };
 
 struct Event {
   int		  id   = -1;
-  EventType	  type = EventType::None;
+  EventType   type = EventType::None;
   std::string mesg = "";
 };
 
