@@ -8,10 +8,16 @@
 #include "modules/init.h"
 
 Module* get_Mod(std::string name) {
-	if(true) {}
+	if (name == "init") {
+		return init_new();
+	}
 	return nullptr;
 };
-void dispatch_Mod(Module* mod, std::string args){};
+void dispatch_Mod(std::string mod, std::string args) {
+	if (mod == "init") {
+		init_dispatch(args);
+	}
+};
 
 int main(int argc, const char* argv[]) {
 	using namespace boost::program_options;
@@ -36,35 +42,34 @@ int main(int argc, const char* argv[]) {
 			  vm);
 		notify(vm);
 
-		if(vm.count("help")) {
+		if (vm.count("help")) {
 			std::cout << general << "\n";
 			exit(0);
-		} else if(vm.count("help-module")) {
+		} else if (vm.count("help-module")) {
 			auto name   = vm["help-module"].as<string>();
 			auto module = get_Mod(name);
-			if(!module) {
+			if (!module) {
 				std::cout << "Module not found.\n";
 				exit(1);
 			}
 			std::cout << module->desc << "\n";
-		} else if(vm.count("module")) {
-			auto name   = vm["module"].as<string>();
-			auto module = get_Mod(name);
-			if(!module) {
+		} else if (vm.count("module")) {
+			auto name = vm["module"].as<string>();
+			if (!get_Mod(name)) {
 				std::cout << "Module not found.\n";
 				exit(1);
 			}
-			if(vm.count("module-args")) {
+			if (vm.count("module-args")) {
 				auto args = vm["module-args"].as<string>();
-				dispatch_Mod(module, args);
+				dispatch_Mod(name, args);
 			} else
-				dispatch_Mod(module, "");
+				dispatch_Mod(name, "");
 		} else {
 			std::cout << general << "\n";
 			exit(0);
 		}
 
-	} catch(const error& ex) { cerr << ex.what() << '\n'; }
+	} catch (const error& ex) { cerr << ex.what() << '\n'; }
 
 	return 0;
 }

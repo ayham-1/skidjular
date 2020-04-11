@@ -24,14 +24,14 @@ void init_create(init_args arg) {
 	writeDB(db, ".db");
 }
 
-void init_dispatch() {
+void init_dispatch(std::string arguments) {
 	init_args arg;
 	init_create(arg);
 }
 
-init_mod init_new() {
-	init_mod mod;
-	mod.name = "Init";
-	mod.desc = "Creates skidjular directory in $(pwd)";
+init_mod* init_new() {
+	init_mod* mod = new init_mod{};
+	mod->name	 = "Init";
+	mod->desc	 = "Creates skidjular directory in $(pwd)";
 	return mod;
 }

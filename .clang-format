@@ -22,7 +22,7 @@ ColumnLimit: '80'
 CompactNamespaces: 'true'
 IncludeBlocks: Preserve
 IndentWidth: '2'
-SpaceBeforeParens: Never
+SpaceBeforeParens: 'ControlStatements'
 SpaceBeforeRangeBasedForLoopColon: 'false'
 SpaceInEmptyParentheses: 'false'
 SpacesBeforeTrailingComments: '1'

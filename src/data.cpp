@@ -51,9 +51,8 @@ void writeDB(DB db, const std::string& dest) {
 	try {
 		std::ofstream f(dest);
 		json		  j = db;
-		std::cout << "hello" << std::endl;
 		f << j;
-	} catch(std::exception& ex) {
+	} catch (std::exception& ex) {
 		std::cout << "Failed writing database to: " << dest << std::endl;
 		std::cout << "Error: " << ex.what() << std::endl;
 	}
@@ -65,7 +64,7 @@ void loadDB(DB& db, const std::string& src) {
 		json		  j;
 		f >> j;
 		db = j;
-	} catch(const std::exception& ex) {
+	} catch (const std::exception& ex) {
 		std::cout << "Failed loading database from: " << src << std::endl;
 		std::cout << "Error: " << ex.what() << std::endl;
 	}
