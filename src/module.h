@@ -9,9 +9,9 @@ using ModuleFn			 = std::function<void(std::string arguments)>;
 using ModuleFnDispatcher = std::function<void(std::string arguments)>;
 
 struct Module {
-  std::string					  name;
-  std::string					  desc;
-  std::map<std::string, ModuleFn> funcs;
+	std::string						name;
+	std::string						desc;
+	std::map<std::string, ModuleFn> funcs;
 };
 
 #endif
