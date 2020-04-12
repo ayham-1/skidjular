@@ -36,7 +36,11 @@ void proj_dispatch(const std::vector<std::string>& arguments) {
 		exit(1);
 	}
 
-	/* Get action type. */
+	/* Get action param. */
+	if (arguments.size() <= 1) {
+		std::cout << "No arguments passed to project action!" << std::endl;
+		exit(1);
+	}
 	auto type_action = std::string{""};
 	for (size_t i = 1; i < arguments.size(); i++) {
 		type_action += arguments[i];
