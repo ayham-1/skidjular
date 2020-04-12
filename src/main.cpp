@@ -6,16 +6,21 @@
 #include "data.h"
 #include "module.h"
 #include "modules/init.h"
+#include "modules/proj.h"
 
 Module* get_Mod(std::string name) {
 	if (name == "init") {
 		return init_new();
+	} else if (name == "proj") {
+		return proj_new();
 	}
 	return nullptr;
 };
-void dispatch_Mod(std::string mod, std::string args) {
+void dispatch_Mod(std::string mod, std::vector<std::string> args) {
 	if (mod == "init") {
 		init_dispatch(args);
+	} else if (mod == "proj") {
+		proj_dispatch(args);
 	}
 };
 
@@ -28,7 +33,7 @@ int main(int argc, const char* argv[]) {
 		general.add_options()("help", "Help Message")(
 			"help-module", value<string>(), "Module for help message")(
 			"module", value<string>(), "Module to execute")(
-			"module-args", value<string>(), "Arguments to use");
+			"module-args", value<vector<string>>(), "Arguments to use");
 		positional_options_description general_positional;
 		general_positional.add("module", 1);
 		general_positional.add("module-args", 10);
@@ -60,10 +65,10 @@ int main(int argc, const char* argv[]) {
 				exit(1);
 			}
 			if (vm.count("module-args")) {
-				auto args = vm["module-args"].as<string>();
+				auto args = vm["module-args"].as<vector<string>>();
 				dispatch_Mod(name, args);
 			} else
-				dispatch_Mod(name, "");
+				dispatch_Mod(name, {""});
 		} else {
 			std::cout << general << "\n";
 			exit(0);

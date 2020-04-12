@@ -24,7 +24,7 @@ void init_create(init_args arg) {
 	writeDB(db, ".db");
 }
 
-void init_dispatch(std::string arguments) {
+void init_dispatch(const std::vector<std::string>& arguments) {
 	init_args arg;
 	init_create(arg);
 }

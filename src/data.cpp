@@ -42,6 +42,7 @@ void to_json(json& j, const DB& db) {
 			 {"lastAccessTime", db.lastAccessTime}};
 }
 void from_json(const json& j, DB& db) {
+	db.projects = new std::map<std::string, Project>();
 	j.at("projects").get_to(*db.projects);
 	j.at("creationDate").get_to(db.creationDate);
 	j.at("lastAccessTime").get_to(db.lastAccessTime);
@@ -57,11 +58,19 @@ void writeDB(DB db, const std::string& dest) {
 		std::cout << "Error: " << ex.what() << std::endl;
 	}
 }
+bool is_empty(std::ifstream& pFile) {
+	return pFile.peek() == std::ifstream::traits_type::eof();
+}
 
 void loadDB(DB& db, const std::string& src) {
 	try {
 		std::ifstream f(src);
 		json		  j;
+		if (is_empty(f)) {
+			std::cout << "Database is not present, someone forgot to create it!"
+					  << std::endl;
+			exit(1);
+		}
 		f >> j;
 		db = j;
 	} catch (const std::exception& ex) {
