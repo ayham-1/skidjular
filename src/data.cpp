@@ -27,17 +27,26 @@ void from_json(const json& j, Project& proj) {
 	j.at("isDone").get_to(proj.isDone);
 }
 void to_json(json& j, const Skid& skid) {
+	std::vector<Project> projects;
+	if (skid.projects != nullptr) {
+		projects = *skid.projects;
+	}
 	j = json{
-		{"projects", *skid.projects},
+		{"projects", projects},
 		{"creationDate", skid.creationDate},
 	};
 }
 void from_json(const json& j, Skid& skid) {
+	skid.projects = new std::vector<Project>();
 	j.at("projects").get_to(*skid.projects);
 	j.at("creationDate").get_to(skid.creationDate);
 }
 void to_json(json& j, const DB& db) {
-	j = json{{"projects", *db.projects},
+	std::map<std::string, Project> projects;
+	if (db.projects != nullptr) {
+		projects = *db.projects;
+	};
+	j = json{{"projects", projects},
 			 {"creationDate", db.creationDate},
 			 {"lastAccessTime", db.lastAccessTime}};
 }
@@ -50,9 +59,11 @@ void from_json(const json& j, DB& db) {
 
 void writeDB(DB db, const std::string& dest) {
 	try {
+		std::cout << "Writing database..." << std::endl;
 		std::ofstream f(dest);
 		json		  j = db;
 		f << j;
+		std::cout << "Wrote database successfully!" << std::endl;
 	} catch (std::exception& ex) {
 		std::cout << "Failed writing database to: " << dest << std::endl;
 		std::cout << "Error: " << ex.what() << std::endl;
@@ -64,6 +75,7 @@ bool is_empty(std::ifstream& pFile) {
 
 void loadDB(DB& db, const std::string& src) {
 	try {
+		std::cout << "Loading database..." << std::endl;
 		std::ifstream f(src);
 		json		  j;
 		if (is_empty(f)) {
@@ -73,6 +85,7 @@ void loadDB(DB& db, const std::string& src) {
 		}
 		f >> j;
 		db = j;
+		std::cout << "Loaded database successfully!" << std::endl;
 	} catch (const std::exception& ex) {
 		std::cout << "Failed loading database from: " << src << std::endl;
 		std::cout << "Error: " << ex.what() << std::endl;
