@@ -56,7 +56,27 @@ void proj_rm(proj_args args) {
 }
 
 void proj_list(proj_args args) {
-	std::cout << "Hello world";
+	int counter = 0;
+	for (auto project: *(args.db->projects)) {
+		std::stringstream header;
+		header << "Project #" << ++counter
+			   << "-----------------------------------";
+		std::cout << header.str() << std::endl;
+		std::cout << "Project name: " << project.second.name << std::endl;
+		std::cout << "Project description: " << project.second.desc
+				  << std::endl;
+		std::cout << "Project UUID: " << project.second.uuid << std::endl;
+		std::cout << "Project PRI: " << project.second.pri << std::endl;
+		std::cout << "Creation Date: " << project.second.creationDate.day << "/"
+				  << project.second.creationDate.month << "/"
+				  << project.second.creationDate.year << std::endl;
+		std::cout << "Done Date: " << project.second.doneDate.day << "/"
+				  << project.second.doneDate.month << "/"
+				  << project.second.doneDate.year << std::endl;
+		std::cout << "Is done: " << project.second.isDone << std::endl;
+		for (size_t i = 0; i < header.str().size(); i++) std::cout << "-";
+		std::cout << std::endl;
+	}
 }
 
 proj_mod* proj_new() {
@@ -100,6 +120,7 @@ void proj_dispatch(const std::vector<std::string>& arguments) {
 		args.action_param = type_action;
 	} else
 		args.action_param = "";
+
 	args.db = new DB();
 	loadDB(*args.db, ".db");
 
@@ -107,6 +128,6 @@ void proj_dispatch(const std::vector<std::string>& arguments) {
 		proj_add(args);
 	else if (type_str == "rm")
 		proj_rm(args);
-	else if (type_str == "list")
+	else if (type_str == "list" || type_str == "ls")
 		proj_list(args);
 }

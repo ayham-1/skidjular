@@ -2,6 +2,8 @@
 #define MODULE_PROJ_H
 
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 
 #include "data.h"
