@@ -15,7 +15,7 @@ void proj_add(proj_args args) {
 
 	/* Get Project description */
 	std::cout << "Project description: ";
-	std::cin >> proj.desc;
+	std::getline(std::cin, proj.desc);
 
 	/* Generate Project UUID */
 	boost::uuids::uuid uuid = boost::uuids::random_generator()();
@@ -24,7 +24,7 @@ void proj_add(proj_args args) {
 	/* Get Priority of project */
 	std::cout << "Project Priority: ";
 	std::string temp;
-	std::cin >> temp;
+	std::getline(std::cin, temp);
 	proj.pri = stoi(temp);
 
 	/* Creation date */
@@ -40,7 +40,20 @@ void proj_add(proj_args args) {
 	delete args.db;
 }
 
-void proj_rm(proj_args args) {}
+void proj_rm(proj_args args) {
+	/* Delete project from database */
+	for (auto it = args.db->projects->begin(); it != args.db->projects->end();
+		 it++) {
+		if (it->second.name == args.action_param) {
+			args.db->projects->erase(it);
+			writeDB(*args.db, ".db");
+			std::cout << "Deleted project successfully!" << std::endl;
+			exit(0);
+		}
+	}
+	std::cout << "Project name not found!" << std::endl;
+	exit(1);
+}
 
 void proj_list(proj_args args) {}
 
