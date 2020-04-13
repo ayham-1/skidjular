@@ -55,7 +55,9 @@ void proj_rm(proj_args args) {
 	exit(1);
 }
 
-void proj_list(proj_args args) {}
+void proj_list(proj_args args) {
+	std::cout << "Hello world";
+}
 
 proj_mod* proj_new() {
 	proj_mod* mod = new proj_mod{};
@@ -84,18 +86,20 @@ void proj_dispatch(const std::vector<std::string>& arguments) {
 	}
 
 	/* Get action param. */
-	if (arguments.size() <= 1) {
-		std::cout << "No arguments passed to project action!" << std::endl;
-		exit(1);
-	}
-	auto type_action = std::string{""};
-	for (size_t i = 1; i < arguments.size(); i++) {
-		type_action += arguments[i];
-		type_action += " ";
-	}
-	type_action.pop_back();
-	args.action_param = type_action;
-
+	if (type_str == "add" || type_str == "rm") {
+		if (arguments.size() <= 1) {
+			std::cout << "No arguments passed to project action!" << std::endl;
+			exit(1);
+		}
+		auto type_action = std::string{""};
+		for (size_t i = 1; i < arguments.size(); i++) {
+			type_action += arguments[i];
+			type_action += " ";
+		}
+		type_action.pop_back();
+		args.action_param = type_action;
+	} else
+		args.action_param = "";
 	args.db = new DB();
 	loadDB(*args.db, ".db");
 
