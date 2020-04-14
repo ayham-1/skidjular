@@ -1,13 +1,9 @@
 #include "proj.h"
 
-#include <string.h>
-
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid.hpp>			  // uuid class
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>		  // streaming operators etc.
-
-#include "../data.h"
 
 void proj_add(proj_args args) {
 	Project proj;
@@ -33,7 +29,7 @@ void proj_add(proj_args args) {
 
 	proj.creationDate.day   = currentTime->tm_mday;
 	proj.creationDate.month = currentTime->tm_mon;
-	proj.creationDate.year  = currentTime->tm_year;
+	proj.creationDate.year  = currentTime->tm_year + 1900;
 
 	(*args.db->projects)[proj.uuid] = proj;
 	writeDB(*args.db, ".db");

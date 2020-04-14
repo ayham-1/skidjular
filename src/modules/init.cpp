@@ -10,10 +10,10 @@ void init_create(init_args arg) {
 
 	db.creationDate.day		= currentTime->tm_mday;
 	db.creationDate.month   = currentTime->tm_mon;
-	db.creationDate.year	= currentTime->tm_year;
+	db.creationDate.year	= currentTime->tm_year + 1900;
 	db.lastAccessTime.day   = currentTime->tm_mday;
 	db.lastAccessTime.month = currentTime->tm_mon;
-	db.lastAccessTime.year  = currentTime->tm_year;
+	db.lastAccessTime.year  = currentTime->tm_year + 1900;
 
 	// Mandatory stuff to stop segmantion fault due to
 	// pointers unintialized.

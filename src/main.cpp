@@ -5,6 +5,7 @@
 
 #include "data.h"
 #include "module.h"
+#include "modules/info.h"
 #include "modules/init.h"
 #include "modules/proj.h"
 
@@ -13,6 +14,8 @@ Module* get_Mod(std::string name) {
 		return init_new();
 	} else if (name == "proj") {
 		return proj_new();
+	} else if (name == "info") {
+		return info_new();
 	}
 	return nullptr;
 };
@@ -21,6 +24,8 @@ void dispatch_Mod(std::string mod, std::vector<std::string> args) {
 		init_dispatch(args);
 	} else if (mod == "proj") {
 		proj_dispatch(args);
+	} else if (mod == "info") {
+		info_dispatch(args);
 	}
 };
 
