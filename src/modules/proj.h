@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "data.h"
+#include "log.h"
 #include "module.h"
 
 enum projActType { Add, Remove, List };

@@ -6,6 +6,8 @@
 #include <boost/uuid/uuid_io.hpp>		  // streaming operators etc.
 
 void proj_add(proj_args args) {
+	logEntry("Creating project with name: " + args.action_param,
+			 EntryType::Creation);
 	Project proj;
 	proj.name = args.action_param;
 
@@ -37,13 +39,15 @@ void proj_add(proj_args args) {
 }
 
 void proj_rm(proj_args args) {
+	logEntry("Removing project with name: " + args.action_param,
+			 EntryType::Modification);
 	/* Delete project from database */
 	for (auto it = args.db->projects->begin(); it != args.db->projects->end();
 		 it++) {
 		if (it->second.name == args.action_param) {
 			args.db->projects->erase(it);
 			writeDB(*args.db, ".db");
-			std::cout << "Deleted project successfully!" << std::endl;
+			logEntry("Deleted project successfully!", EntryType::Modification);
 			exit(0);
 		}
 	}

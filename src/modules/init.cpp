@@ -20,7 +20,7 @@ void init_create(init_args arg) {
 	db.projects	= new std::map<std::string, Project>();
 	db.log.entries = new std::vector<Entry>();
 
-	// TODO: Add event logging
+	logEntry("Creating database.", EntryType::Creation);
 	writeDB(db, ".db");
 }
 

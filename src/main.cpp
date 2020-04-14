@@ -93,5 +93,7 @@ int main(int argc, const char* argv[]) {
 
 	} catch (const error& ex) { cerr << ex.what() << '\n'; }
 
+	writeLog(LOC_LOG);
+	timer_stop();
 	return 0;
 }

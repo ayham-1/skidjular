@@ -1,4 +1,5 @@
 #include "data.h"
+#include "log.h"
 
 void to_json(json& j, const Date& date) {
 	j = json{{"day", date.day}, {"month", date.day}, {"year", date.year}};
@@ -59,11 +60,10 @@ void from_json(const json& j, DB& db) {
 
 void writeDB(DB db, const std::string& dest) {
 	try {
-		std::cout << "Writing database..." << std::endl;
+		logEntry("Writing Database...", EntryType::Modification);
 		std::ofstream f(dest);
 		json		  j = db;
 		f << j;
-		std::cout << "Wrote database successfully!" << std::endl;
 	} catch (std::exception& ex) {
 		std::cout << "Failed writing database to: " << dest << std::endl;
 		std::cout << "Error: " << ex.what() << std::endl;
@@ -75,7 +75,7 @@ bool is_empty(std::ifstream& pFile) {
 
 void loadDB(DB& db, const std::string& src) {
 	try {
-		std::cout << "Loading database..." << std::endl;
+		logEntry("Loading Database...", EntryType::Access);
 		std::ifstream f(src);
 		json		  j;
 		if (is_empty(f)) {
@@ -85,7 +85,6 @@ void loadDB(DB& db, const std::string& src) {
 		}
 		f >> j;
 		db = j;
-		std::cout << "Loaded database successfully!" << std::endl;
 	} catch (const std::exception& ex) {
 		std::cout << "Failed loading database from: " << src << std::endl;
 		std::cout << "Error: " << ex.what() << std::endl;

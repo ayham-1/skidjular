@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+#include "../data.h"
+#include "../log.h"
 #include "module.h"
 
 struct init_args {};
