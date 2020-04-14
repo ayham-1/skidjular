@@ -33,8 +33,7 @@ void dispatch_Mod(std::string mod, std::vector<std::string> args) {
 
 int main(int argc, const char* argv[]) {
 	timer_start();
-	Log log;
-	addEntry(log, "Started Program.", EntryType::None);
+	addEntry("Started Program.", EntryType::None);
 	using namespace boost::program_options;
 	using namespace std;
 
@@ -59,7 +58,7 @@ int main(int argc, const char* argv[]) {
 
 		if (vm.count("help")) {
 			std::cout << general << "\n";
-			writeLog(log, LOC_LOG);
+			writeLog(LOC_LOG);
 			timer_stop();
 			exit(0);
 		} else if (vm.count("help-module")) {
@@ -67,7 +66,7 @@ int main(int argc, const char* argv[]) {
 			auto module = get_Mod(name);
 			if (!module) {
 				std::cout << "Module not found.\n";
-				writeLog(log, LOC_LOG);
+				writeLog(LOC_LOG);
 				timer_stop();
 				exit(1);
 			}
@@ -76,7 +75,7 @@ int main(int argc, const char* argv[]) {
 			auto name = vm["module"].as<string>();
 			if (!get_Mod(name)) {
 				std::cout << "Module not found.\n";
-				writeLog(log, LOC_LOG);
+				writeLog(LOC_LOG);
 				timer_stop();
 				exit(1);
 			}
@@ -87,7 +86,7 @@ int main(int argc, const char* argv[]) {
 				dispatch_Mod(name, {""});
 		} else {
 			std::cout << general << "\n";
-			writeLog(log, LOC_LOG);
+			writeLog(LOC_LOG);
 			timer_stop();
 			exit(0);
 		}

@@ -12,7 +12,7 @@ auto t2str(EntryType type) -> std::string {
 	return "Type: None";
 }
 
-void addEntry(Log& log, const std::string& msg, EntryType type) {
+void addEntry(const std::string& msg, EntryType type) {
 	Entry ev;
 	ev.type		 = type;
 	ev.mesg		 = msg;
@@ -25,19 +25,19 @@ void addEntry(Log& log, const std::string& msg, EntryType type) {
 	ev.creationDate.month = currentTime->tm_mon;
 	ev.creationDate.year  = currentTime->tm_year + 1900;
 
-	if (!log.entries)
-		log.entries = new std::vector<Entry>();
-	log.entries->push_back(ev);
+	if (!s_log.entries)
+		s_log.entries = new std::vector<Entry>();
+	s_log.entries->push_back(ev);
 }
 
-void writeLog(const Log& log, const std::string& loc, bool append) {
+void writeLog(const std::string& loc, bool append) {
 	std::fstream f;
 	if (append)
 		f.open(LOC_LOG, std::fstream::out | std::fstream::app);
 	else
 		f.open(LOC_LOG);
 
-	for (auto entry: *log.entries) {
+	for (auto entry: *s_log.entries) {
 		f << "[ " << entry.creationDate.day << "/" << entry.creationDate.month
 		  << "/" << entry.creationDate.year << " ] "
 		  << "[ " << std::to_string(entry.timerTime) << " ] "
@@ -46,7 +46,7 @@ void writeLog(const Log& log, const std::string& loc, bool append) {
 	f.close();
 }
 
-void printLog(Log& log, const std::string& loc, int entries) {
+void printLog(const std::string& loc, int entries) {
 	std::fstream f(LOC_LOG);
 	std::string  line = "";
 	while (f >> line) { std::cout << line; }
