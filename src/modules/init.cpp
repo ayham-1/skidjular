@@ -18,7 +18,7 @@ void init_create(init_args arg) {
 	// Mandatory stuff to stop segmantion fault due to
 	// pointers unintialized.
 	db.projects	= new std::map<std::string, Project>();
-	db.log.entries = new std::vector<Entry>();
+	db.log.entries = new std::list<Entry>();
 
 	logEntry("Creating database.", EntryType::Creation);
 	writeDB(db, ".db");

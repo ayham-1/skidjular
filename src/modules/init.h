@@ -4,6 +4,7 @@
 #include <time.h>
 #include <ctime>
 #include <iostream>
+#include <list>
 #include <vector>
 
 #include "../data.h"

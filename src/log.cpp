@@ -26,8 +26,8 @@ void logEntry(const std::string& msg, EntryType type) {
 	ev.creationDate.year  = currentTime->tm_year + 1900;
 
 	if (!s_log.entries)
-		s_log.entries = new std::vector<Entry>();
-	s_log.entries->push_back(ev);
+		s_log.entries = new std::list<Entry>();
+	s_log.entries->push_front(ev);
 }
 
 void writeLog(const std::string& loc, bool append) {

@@ -2,6 +2,7 @@
 #define DATA_H
 #include <fstream>
 #include <iostream>
+#include <list>
 #include <map>
 #include <string>
 #include <vector>
@@ -50,7 +51,7 @@ struct Entry {
 };
 
 struct Log {
-	std::vector<Entry>* entries = nullptr;
+	std::list<Entry>* entries = nullptr;
 };
 
 /////////////// EVENT END OF HISTORY SYSTEM STRUCTURES /////////////
