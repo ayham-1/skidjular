@@ -1,6 +1,5 @@
 #ifndef DATA_H
 #define DATA_H
-
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -10,9 +9,9 @@
 #include "json.hpp"
 using nlohmann::json;
 
-#define LOC_DB = ".db"
-#define LOC_EVENTLOG = ".log"
-#define LOC_SKIDID = "skid" // used as LOC_SKIDID+SKIDNUM
+#define LOC_DB ".db"
+#define LOC_LOG ".log"
+#define LOC_SKIDID "skid" // used as LOC_SKIDID+SKIDNUM
 
 /////////////// DATA CONTAINING STRUCTURES ///////////////////
 
@@ -41,17 +40,17 @@ struct Skid {
 
 /////////////// EVENT HISTORY SYSTEM STRUCTURES ////////////////////
 
-enum EventType { Access = 0, Creation = 1, Modification = 2, None = -1 };
+enum EntryType { Access = 0, Creation = 1, Modification = 2, None = -1 };
 
-struct Event {
-	int			id   = -1;
-	EventType   type = EventType::None;
-	std::string mesg = "";
+struct Entry {
+	EntryType   type	  = EntryType::None;
+	std::string mesg	  = "";
+	float		timerTime = 0.0f;
+	Date		creationDate;
 };
 
-struct EventLog {
-	std::vector<Event>* events;
-	std::string			sha512 = "";
+struct Log {
+	std::vector<Entry>* entries = nullptr;
 };
 
 /////////////// EVENT END OF HISTORY SYSTEM STRUCTURES /////////////
@@ -60,7 +59,7 @@ struct EventLog {
 struct DB {
 	std::map<std::string, Project>* projects;
 	std::vector<Skid>				skids;
-	EventLog						log;
+	Log								log;
 
 	Date creationDate;
 	Date lastAccessTime;

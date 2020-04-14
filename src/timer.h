@@ -5,8 +5,8 @@
 #include <chrono>
 
 struct Timer {
-	std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
-	std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
+	std::chrono::time_point<std::chrono::steady_clock> startTime;
+	std::chrono::time_point<std::chrono::steady_clock> endTime;
 
 	bool isRunning = false;
 };
