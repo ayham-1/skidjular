@@ -33,7 +33,7 @@ void dispatch_Mod(std::string mod, std::vector<std::string> args) {
 
 int main(int argc, const char* argv[]) {
 	timer_start();
-	addEntry("Started Program.", EntryType::None);
+	logEntry("Started Program.", EntryType::None);
 	using namespace boost::program_options;
 	using namespace std;
 

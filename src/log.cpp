@@ -12,7 +12,7 @@ auto t2str(EntryType type) -> std::string {
 	return "Type: None";
 }
 
-void addEntry(const std::string& msg, EntryType type) {
+void logEntry(const std::string& msg, EntryType type) {
 	Entry ev;
 	ev.type		 = type;
 	ev.mesg		 = msg;

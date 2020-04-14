@@ -9,7 +9,7 @@
 
 static Log s_log;
 
-void addEntry(const std::string& msg, EntryType type);
+void logEntry(const std::string& msg, EntryType type);
 void writeLog(const std::string& loc,
 			  bool				 append = true /* false == overwrite */);
 void printLog(const std::string& loc,
