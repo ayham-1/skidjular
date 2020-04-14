@@ -6,6 +6,7 @@
 #include "data.h"
 #include "log.h"
 #include "module.h"
+#include "modules/history.h"
 #include "modules/info.h"
 #include "modules/init.h"
 #include "modules/proj.h"
@@ -18,6 +19,8 @@ Module* get_Mod(std::string name) {
 		return proj_new();
 	} else if (name == "info") {
 		return info_new();
+	} else if (name == "history") {
+		return history_new();
 	}
 	return nullptr;
 };
@@ -28,6 +31,8 @@ void dispatch_Mod(std::string mod, std::vector<std::string> args) {
 		proj_dispatch(args);
 	} else if (mod == "info") {
 		info_dispatch(args);
+	} else if (mod == "history") {
+		history_dispatch(args);
 	}
 };
 
@@ -83,7 +88,7 @@ int main(int argc, const char* argv[]) {
 				auto args = vm["module-args"].as<vector<string>>();
 				dispatch_Mod(name, args);
 			} else
-				dispatch_Mod(name, {""});
+				dispatch_Mod(name, {});
 		} else {
 			std::cout << general << "\n";
 			writeLog(LOC_LOG);

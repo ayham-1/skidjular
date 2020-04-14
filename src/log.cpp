@@ -49,6 +49,11 @@ void writeLog(const std::string& loc, bool append) {
 void printLog(const std::string& loc, int entries) {
 	std::fstream f(LOC_LOG);
 	std::string  line = "";
-	while (f >> line && entries--) { std::cout << line; }
+	if (entries)
+		while (std::getline(f, line) && entries--) {
+			std::cout << line << std::endl;
+		}
+	else
+		while (std::getline(f, line)) { std::cout << line << std::endl; }
 	f.close();
 }
