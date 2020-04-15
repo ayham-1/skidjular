@@ -4,16 +4,10 @@
 
 void init_create(init_args arg) {
 	std::cout << "Creating database in current directory." << std::endl;
-	DB		   db;
-	time_t	 t		   = time(0);
-	struct tm* currentTime = localtime(&t);
+	DB db;
 
-	db.creationDate.day		= currentTime->tm_mday;
-	db.creationDate.month   = currentTime->tm_mon;
-	db.creationDate.year	= currentTime->tm_year + 1900;
-	db.lastAccessTime.day   = currentTime->tm_mday;
-	db.lastAccessTime.month = currentTime->tm_mon;
-	db.lastAccessTime.year  = currentTime->tm_year + 1900;
+	db.creationDate   = get_today();
+	db.lastAccessTime = get_today();
 
 	// Mandatory stuff to stop segmantion fault due to
 	// pointers unintialized.

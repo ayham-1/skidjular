@@ -26,12 +26,7 @@ void proj_add(proj_args args) {
 	proj.pri = stoi(temp);
 
 	/* Creation date */
-	time_t	 t		   = time(0);
-	struct tm* currentTime = localtime(&t);
-
-	proj.creationDate.day   = currentTime->tm_mday;
-	proj.creationDate.month = currentTime->tm_mon;
-	proj.creationDate.year  = currentTime->tm_year + 1900;
+	proj.creationDate = get_today();
 
 	(*args.db->projects)[proj.uuid] = proj;
 	writeDB(*args.db, LOC_DB);

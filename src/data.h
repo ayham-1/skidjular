@@ -1,5 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
+
+#include <sys/stat.h>
 #include <fstream>
 #include <iostream>
 #include <list>
@@ -14,7 +16,7 @@ using nlohmann::json;
 #define LOC_LOG ".log"
 #define LOC_SKIDID "skid" // used as LOC_SKIDID+SKIDNUM
 
-/////////////// DATA CONTAINING STRUCTURES ///////////////////
+////// DATA STRUCTURES
 
 struct Date {
 	int day	= 0;
@@ -38,11 +40,10 @@ struct Project {
 struct Skid {
 	Project* projects = nullptr;
 	Date	 creationDate;
+	Date	 date;
 };
 
-/////////////// END OF DATA CONTAINING STRUCTURES ////////////
-
-/////////////// EVENT HISTORY SYSTEM STRUCTURES ////////////////////
+//////// EVENT HISTORY
 
 enum EntryType { Access = 0, Creation = 1, Modification = 2, None = -1 };
 
@@ -57,23 +58,30 @@ struct Log {
 	std::list<Entry>* entries = nullptr;
 };
 
-/////////////// EVENT END OF HISTORY SYSTEM STRUCTURES /////////////
-
 // Main Database that represents the skidjular directory.
 struct DB {
 	std::map<std::string, Project>* projects;
 	std::vector<Skid>				skids;
 	Log								log;
+	int								lastSkidID = 0;
 
 	Date creationDate;
 	Date lastAccessTime;
+	;
 };
 
-////////////// Utilities for the Database structure ////////////////
+//////// UTILITIES
 
 void writeDB(DB db, const std::string& dest);
 void loadDB(DB& db, const std::string& src);
 
-////////////// End Utilities for the Database structure ////////////
+void writeSkid(Skid skid, int skidNum);
+void loadSkid(Skid& skid, int skidNum);
+
+Date get_today();
+// Date addDate(Date initial, int number, int* slot = nullptr);
+
+bool is_empty(std::ifstream& pFile);
+bool is_path_exist(const std::string& s);
 
 #endif
