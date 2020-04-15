@@ -36,8 +36,8 @@ struct Project {
 };
 
 struct Skid {
-	std::vector<Project>* projects = {};
-	Date				  creationDate;
+	Project* projects = nullptr;
+	Date	 creationDate;
 };
 
 /////////////// END OF DATA CONTAINING STRUCTURES ////////////

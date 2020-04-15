@@ -28,7 +28,7 @@ void from_json(const json& j, Project& proj) {
 	j.at("isDone").get_to(proj.isDone);
 }
 void to_json(json& j, const Skid& skid) {
-	std::vector<Project> projects;
+	Project projects;
 	if (skid.projects != nullptr) {
 		projects = *skid.projects;
 	}
@@ -38,7 +38,7 @@ void to_json(json& j, const Skid& skid) {
 	};
 }
 void from_json(const json& j, Skid& skid) {
-	skid.projects = new std::vector<Project>();
+	skid.projects = new Project();
 	j.at("projects").get_to(*skid.projects);
 	j.at("creationDate").get_to(skid.creationDate);
 }

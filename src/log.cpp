@@ -41,7 +41,6 @@ void writeLog(const std::string& loc, bool append) {
 		f.open(LOC_LOG);
 
 	for (auto entry: *s_log.entries) {
-		// TODO: ADD HOUR, MINUTE, SECONDS
 		f << "[ " << entry.creationDate.day << "/" << entry.creationDate.month
 		  << "/" << entry.creationDate.year << " ] [ "
 		  << entry.creationDate.hour << ":" << entry.creationDate.minute << ":"
