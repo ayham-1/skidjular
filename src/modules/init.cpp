@@ -21,7 +21,7 @@ void init_create(init_args arg) {
 	db.log.entries = new std::list<Entry>();
 
 	logEntry("Creating database.", EntryType::Creation);
-	writeDB(db, ".db");
+	writeDB(db, LOC_DB);
 }
 
 void init_dispatch(const std::vector<std::string>& arguments) {

@@ -34,7 +34,7 @@ void proj_add(proj_args args) {
 	proj.creationDate.year  = currentTime->tm_year + 1900;
 
 	(*args.db->projects)[proj.uuid] = proj;
-	writeDB(*args.db, ".db");
+	writeDB(*args.db, LOC_DB);
 	delete args.db;
 }
 
@@ -46,7 +46,7 @@ void proj_rm(proj_args args) {
 		 it++) {
 		if (it->second.name == args.action_param) {
 			args.db->projects->erase(it);
-			writeDB(*args.db, ".db");
+			writeDB(*args.db, LOC_DB);
 			logEntry("Deleted project successfully!", EntryType::Modification);
 			exit(0);
 		}
@@ -121,8 +121,9 @@ void proj_dispatch(const std::vector<std::string>& arguments) {
 	} else
 		args.action_param = "";
 
+	/* Load database */
 	args.db = new DB();
-	loadDB(*args.db, ".db");
+	loadDB(*args.db, LOC_DB);
 
 	if (type_str == "add")
 		proj_add(args);

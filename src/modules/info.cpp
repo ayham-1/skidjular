@@ -22,6 +22,6 @@ info_mod* info_new() {
 void info_dispatch(const std::vector<std::string>& arguments) {
 	info_args args;
 	args.db = new DB();
-	loadDB(*args.db, ".db");
+	loadDB(*args.db, LOC_DB);
 	info_print(args);
 }
