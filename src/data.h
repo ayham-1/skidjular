@@ -17,9 +17,12 @@ using nlohmann::json;
 /////////////// DATA CONTAINING STRUCTURES ///////////////////
 
 struct Date {
-	int day   = 0;
-	int month = 0; // 0-11
-	int year  = 0; // + 1900 for currentyear
+	int day	= 0;
+	int month  = 0; // 0-11
+	int year   = 0; // + 1900 for currentyear
+	int hour   = 0;
+	int minute = 0;
+	int second = 0;
 };
 
 struct Project {

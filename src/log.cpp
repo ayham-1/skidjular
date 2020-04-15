@@ -21,9 +21,12 @@ void logEntry(const std::string& msg, EntryType type) {
 	time_t	 t		   = time(0);
 	struct tm* currentTime = localtime(&t);
 
-	ev.creationDate.day   = currentTime->tm_mday;
-	ev.creationDate.month = currentTime->tm_mon;
-	ev.creationDate.year  = currentTime->tm_year + 1900;
+	ev.creationDate.day	= currentTime->tm_mday;
+	ev.creationDate.month  = currentTime->tm_mon;
+	ev.creationDate.year   = currentTime->tm_year + 1900;
+	ev.creationDate.hour   = currentTime->tm_hour;
+	ev.creationDate.minute = currentTime->tm_min;
+	ev.creationDate.second = currentTime->tm_sec;
 
 	if (!s_log.entries)
 		s_log.entries = new std::list<Entry>();
@@ -38,10 +41,13 @@ void writeLog(const std::string& loc, bool append) {
 		f.open(LOC_LOG);
 
 	for (auto entry: *s_log.entries) {
+		// TODO: ADD HOUR, MINUTE, SECONDS
 		f << "[ " << entry.creationDate.day << "/" << entry.creationDate.month
-		  << "/" << entry.creationDate.year << " ] "
-		  << "[ " << std::to_string(entry.timerTime) << " ] "
-		  << t2str(entry.type) << " - " << entry.mesg << "\n";
+		  << "/" << entry.creationDate.year << " ] [ "
+		  << entry.creationDate.hour << ":" << entry.creationDate.minute << ":"
+		  << entry.creationDate.second << " ] [ "
+		  << std::to_string(entry.timerTime) << " ] " << t2str(entry.type)
+		  << " - " << entry.mesg << "\n";
 	}
 	f.close();
 }
