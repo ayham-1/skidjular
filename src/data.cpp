@@ -125,10 +125,10 @@ void loadSkid(Skid& skid, int skidNum) {
 
 Date get_today() {
 	Date	   res;
-	time_t	 t		   = time(0);
+	time_t	   t		   = time(0);
 	struct tm* currentTime = localtime(&t);
 
-	res.day   = currentTime->tm_mday;
+	res.day	  = currentTime->tm_mday;
 	res.month = currentTime->tm_mon;
 	res.year  = currentTime->tm_year + 1900;
 
@@ -136,7 +136,31 @@ Date get_today() {
 	return res;
 }
 
-// Date addDate(Date initial, int number, int* slot) {}
+int get_day_num(Date initial) {
+	auto m = (initial.month + 9) % 12;
+	auto y = initial.year - m / 10;
+	return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1);
+}
+
+Date get_day_date(int intial) {
+	auto y	 = (10000 * g + 14780) / 3652425;
+	auto ddd = g - (365 * y + y / 4 - y / 100 + y / 400);
+	if (ddd < 0)
+		y = y - 1;
+	ddd		= g - (365 * y + y / 4 - y / 100 + y / 400);
+	auto mi = (100 * ddd + 52) / 3060;
+	auto mm = (mi + 2) % 12 + 1;
+	auto y	= y + (mi + 2) / 12;
+	auto dd = ddd - (mi * 306 + 5) / 10 + 1;
+
+	Date res;
+	res.year  = y;
+	res.month = mm;
+	res.day	  = dd;
+	return res;
+}
+
+Date addDays_date(Date initial, int number) {}
 
 bool is_empty(std::ifstream& pFile) {
 	return pFile.peek() == std::ifstream::traits_type::eof();

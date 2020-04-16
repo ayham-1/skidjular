@@ -19,7 +19,7 @@ using nlohmann::json;
 ////// DATA STRUCTURES
 
 struct Date {
-	int day	= 0;
+	int day	   = 0;
 	int month  = 0; // 0-11
 	int year   = 0; // + 1900 for currentyear
 	int hour   = 0;
@@ -48,7 +48,7 @@ struct Skid {
 enum EntryType { Access = 0, Creation = 1, Modification = 2, None = -1 };
 
 struct Entry {
-	EntryType   type	  = EntryType::None;
+	EntryType	type	  = EntryType::None;
 	std::string mesg	  = "";
 	float		timerTime = 0.0f;
 	Date		creationDate;
@@ -79,7 +79,10 @@ void writeSkid(Skid skid, int skidNum);
 void loadSkid(Skid& skid, int skidNum);
 
 Date get_today();
-// Date addDate(Date initial, int number, int* slot = nullptr);
+int	 get_day_num(Date initial);
+Date get_day_date(int num);
+Date addDays_date(Date initial, int number);
+Date subDays_date(Date initial, int number);
 
 bool is_empty(std::ifstream& pFile);
 bool is_path_exist(const std::string& s);
