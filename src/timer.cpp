@@ -7,7 +7,7 @@ void timer_start() {
 
 void timer_stop() {
 	s_timer.isRunning = false;
-	s_timer.endTime   = std::chrono::steady_clock::now();
+	s_timer.endTime	  = std::chrono::steady_clock::now();
 }
 
 float timer_get() {
@@ -17,4 +17,3 @@ float timer_get() {
 		std::chrono::steady_clock::now() - s_timer.startTime;
 	return duration.count();
 }
-

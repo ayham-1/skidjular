@@ -76,7 +76,7 @@ void proj_list(proj_args args) {
 
 proj_mod* proj_new() {
 	proj_mod* mod = new proj_mod{};
-	mod->name	 = "Project Manager";
+	mod->name	  = "Project Manager";
 	mod->desc =
 		std::string("Manages projects list with these commands:\n") +
 		std::string("- skidjular proj add <Name> (Adds new project).\n") +

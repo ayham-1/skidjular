@@ -14,8 +14,8 @@ void info_print(info_args args) {
 
 info_mod* info_new() {
 	info_mod* mod = new info_mod{};
-	mod->name	 = "Info";
-	mod->desc	 = "Shows information about the skids databse";
+	mod->name	  = "Info";
+	mod->desc	  = "Shows information about the skids databse";
 	return mod;
 }
 

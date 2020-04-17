@@ -10,6 +10,7 @@
 #include "modules/info.h"
 #include "modules/init.h"
 #include "modules/proj.h"
+#include "modules/skids.h"
 #include "timer.h"
 
 Module* get_Mod(std::string name) {
@@ -21,6 +22,8 @@ Module* get_Mod(std::string name) {
 		return info_new();
 	} else if (name == "history") {
 		return history_new();
+	} else if (name == "skids") {
+		return skids_new();
 	}
 	return nullptr;
 };
@@ -33,6 +36,8 @@ void dispatch_Mod(std::string mod, std::vector<std::string> args) {
 		info_dispatch(args);
 	} else if (mod == "history") {
 		history_dispatch(args);
+	} else if (mod == "skids") {
+		skids_dispatch(args);
 	}
 };
 
@@ -67,7 +72,7 @@ int main(int argc, const char* argv[]) {
 			timer_stop();
 			exit(0);
 		} else if (vm.count("help-module")) {
-			auto name   = vm["help-module"].as<string>();
+			auto name	= vm["help-module"].as<string>();
 			auto module = get_Mod(name);
 			if (!module) {
 				std::cout << "Module not found.\n";
@@ -88,7 +93,7 @@ int main(int argc, const char* argv[]) {
 				auto args = vm["module-args"].as<vector<string>>();
 				dispatch_Mod(name, args);
 			} else
-				dispatch_Mod(name, {});
+				dispatch_Mod(name, {""});
 		} else {
 			std::cout << general << "\n";
 			writeLog(LOC_LOG);

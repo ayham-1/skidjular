@@ -25,6 +25,17 @@ struct Date {
 	int hour   = 0;
 	int minute = 0;
 	int second = 0;
+
+	bool operator==(const Date& other) {
+		if (day == other.day)
+			if (month == other.month)
+				if (year == other.year)
+					if (hour == other.hour)
+						if (minute == other.minute)
+							if (second == other.minute)
+								return true;
+		return false;
+	}
 };
 
 struct Project {
@@ -79,10 +90,7 @@ void writeSkid(Skid skid, int skidNum);
 void loadSkid(Skid& skid, int skidNum);
 
 Date get_today();
-int	 get_day_num(Date initial);
-Date get_day_date(int num);
-Date addDays_date(Date initial, int number);
-Date subDays_date(Date initial, int number);
+Date addDays_date(Date initial, int);
 
 bool is_empty(std::ifstream& pFile);
 bool is_path_exist(const std::string& s);

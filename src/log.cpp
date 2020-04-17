@@ -18,10 +18,10 @@ void logEntry(const std::string& msg, EntryType type) {
 	ev.mesg		 = msg;
 	ev.timerTime = timer_get();
 
-	time_t	 t		   = time(0);
+	time_t	   t		   = time(0);
 	struct tm* currentTime = localtime(&t);
 
-	ev.creationDate.day	= currentTime->tm_mday;
+	ev.creationDate.day	   = currentTime->tm_mday;
 	ev.creationDate.month  = currentTime->tm_mon;
 	ev.creationDate.year   = currentTime->tm_year + 1900;
 	ev.creationDate.hour   = currentTime->tm_hour;
@@ -53,7 +53,7 @@ void writeLog(const std::string& loc, bool append) {
 
 void printLog(const std::string& loc, int entries) {
 	std::fstream f(LOC_LOG);
-	std::string  line = "";
+	std::string	 line = "";
 	if (entries)
 		while (std::getline(f, line) && entries--) {
 			std::cout << line << std::endl;
