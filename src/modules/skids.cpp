@@ -129,11 +129,55 @@ void skids_this(skids_args args) {
 			std::cout << ": " << skid->project->name << std::endl;
 	}
 }
-void skids_set_this(skids_args args) {}
-void skids_set_this_lazy(skids_args args) {}
-void skids_set_lazy(skids_args args) {}
-void skids_set_day(skids_args args) {}
-void skids_set_interactive(skids_args args) {}
+
+void skids_set(skids_args args) {
+	logEntry("Setting unset skids, skids_set", EntryType::Access);
+
+	/* Check for presence of projects */
+	if (args.db->projects->size() == 0) {
+		std::cout << "No projects present!" << std::endl;
+		exit(1);
+	}
+
+	/* Load all skids */
+	for (size_t i = 1; i <= args.db->lastSkidID; i++) {
+		Skid skid;
+		loadSkid(skid, i);
+		args.db->skids.push_back(skid);
+	}
+
+	/* Ask user for project values */
+	std::vector<Skid> skids;
+	std::vector<int>  skids_id;
+	int				  counter = 1;
+	for (auto skid: args.db->skids) {
+		if (skid.project->name != "")
+			continue;
+	restart:
+		std::cout << "Enter day " << skid.date.year << "/" << skid.date.month
+				  << "/" << skid.date.day << " project name: ";
+		std::string project_name = "";
+		std::cin >> project_name;
+
+		skid.project = find_proj(*args.db, project_name);
+		if (!skid.project) {
+			std::string ans;
+			std::cout << "Could not find project.\nTry again? [y/n]: ";
+			std::cin >> ans;
+			if (ans == "y")
+				goto restart;
+			else {
+				std::cout << "Failed to find project!" << std::endl;
+				exit(1);
+			}
+		}
+		skids.push_back(skid);
+		skids_id.push_back(counter++);
+	}
+
+	int id_counter = 0;
+	for (auto skid: skids) writeSkid(skid, skids_id[id_counter++]);
+}
 
 skids_mod* skids_new() {
 	skids_mod* mod = new skids_mod();
@@ -145,16 +189,8 @@ skids_mod* skids_new() {
 		std::string("- skidjular skids init now (Force creates this week)\n") +
 		std::string("- skidjular skids this (Outputs this week's projects)\n") +
 		std::string("- skidjular skids now (Outputs today's project)\n") +
-		std::string("- skidjular skids set this <day> <proj_name> (Set this "
-					"week's <day> to <proj>)\n") +
-		std::string("- skidjular skids set <day> <proj_name> (Sets next unset "
-					"<day> to <proj>\n") +
-		std::string("- skidjular skids set this lazy (Force sets this week's "
-					"projects automatically)\n") +
-		std::string("- skidjular skids set lazy (Sets next unset week's "
-					"projects automatically)\n") +
-		std::string("- skidjular skids i/interactive (Sets next unset week's "
-					"projects interactively)\n");
+		std::string(
+			"- skidjular skids set (Sets unset projects interactively)\n");
 	return mod;
 }
 
@@ -188,38 +224,10 @@ void skids_dispatch(const std::vector<std::string>& arguments) {
 		func		 = skids_this;
 		goto afterActionGet;
 	} else if (type_str == "set") {
-		if (arguments.size() > 1) {
-			auto type_str2 = arguments[1];
-			if (type_str2 == "this") {
-				if (arguments.size() > 2) {
-					auto type_str3 = arguments[2];
-					if (type_str3 == "lazy") {
-						args.type	 = skidsActType::set_this_lazy;
-						param_offset = 3;
-						func		 = skids_set_this_lazy;
-						goto afterActionGet;
-					}
-					args.type = skidsActType::set_this;
-					func	  = skids_set_this;
-					goto afterActionGet;
-				}
-			} else if (type_str2 == "lazy") {
-				args.type	 = skidsActType::set_lazy;
-				param_offset = 2;
-				func		 = skids_set_lazy;
-				goto afterActionGet;
-			} else if (type_str2 == "interactive" || type_str2 == "i") {
-				args.type	 = skidsActType::set_interactive;
-				param_offset = 2;
-				func		 = skids_set_lazy;
-				goto afterActionGet;
-			} else if (arguments.size() >= 3) {
-				args.type	 = skidsActType::set_day;
-				param_offset = 4;
-				func		 = skids_set_day;
-				goto afterActionGet;
-			}
-		}
+		args.type	 = skidsActType::set;
+		param_offset = 1;
+		func		 = skids_set;
+		goto afterActionGet;
 	}
 	std::cout << "Inavlid number of arguments passed to skids!" << std::endl;
 	exit(1);

@@ -144,6 +144,14 @@ bool is_path_exist(const std::string& s) {
 	return (stat(s.c_str(), &buffer) == 0);
 }
 
+Project* find_proj(DB& db, std::string name) {
+	for (auto project: *db.projects) {
+		if (project.second.name == name)
+			return &((*db.projects)[project.first]);
+	}
+	return nullptr;
+}
+
 ///////////////// COPIED CODE
 using namespace std;
 

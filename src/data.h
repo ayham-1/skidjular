@@ -95,4 +95,6 @@ Date addDays_date(Date initial, int);
 bool is_empty(std::ifstream& pFile);
 bool is_path_exist(const std::string& s);
 
+Project* find_proj(DB& db, std::string name);
+
 #endif
