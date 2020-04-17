@@ -15,7 +15,7 @@ void skids_init(skids_args args) {
 	}
 
 	/* Create skids */
-	for (size_t i = 0; i < 7; i++) {
+	for (size_t i = 1; i <= 7; i++) {
 		Skid skid;
 		skid.creationDate = get_today();
 		skid.date		  = firstDate;
@@ -34,7 +34,7 @@ void skids_init_now(skids_args args) {
 	/* Load all skids */
 	if (is_path_exist(LOC_SKIDID + std::to_string(args.db->lastSkidID))) {
 		/* Load all skids */
-		for (size_t i = 0; i < args.db->lastSkidID; i++) {
+		for (size_t i = 1; i <= args.db->lastSkidID; i++) {
 			Skid skid;
 			loadSkid(skid, i);
 			args.db->skids.push_back(skid);
@@ -57,7 +57,7 @@ void skids_init_now(skids_args args) {
 
 	/* Create skids */
 	auto firstDate = get_today();
-	for (size_t i = 0; i < 7; i++) {
+	for (size_t i = 1; i <= 7; i++) {
 		Skid skid;
 		skid.creationDate = get_today();
 		skid.date		  = firstDate;
@@ -68,7 +68,38 @@ void skids_init_now(skids_args args) {
 	args.db->lastSkidID = skid_id;
 	writeDB(*args.db, LOC_DB);
 }
-void skids_now(skids_args args) {}
+
+void skids_now(skids_args args) {
+	logEntry("Accessing today's skid, skids_now", EntryType::Access);
+	/* Load all skids */
+	for (size_t i = 1; i <= args.db->lastSkidID; i++) {
+		Skid skid;
+		loadSkid(skid, i);
+		args.db->skids.push_back(skid);
+	}
+
+	/* Get today's skidID */
+	Skid* skid = nullptr;
+	for (size_t i = 0; i < args.db->skids.size(); i++) {
+		if (args.db->skids[i].date == get_today()) {
+			skid = &(args.db->skids[i]);
+			break;
+		}
+	}
+
+	if (!skid) {
+		std::cout << "Did not find today's skid." << std::endl;
+		exit(1);
+	}
+
+	if (skid->project->name == "") {
+		std::cout << "Today's project is not set." << std::endl;
+		exit(1);
+	}
+
+	std::cout << "Project of today is " << skid->project->name << std::endl;
+	exit(0);
+}
 void skids_this(skids_args args) {}
 void skids_set_this(skids_args args) {}
 void skids_set_this_lazy(skids_args args) {}

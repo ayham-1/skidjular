@@ -2,7 +2,7 @@
 #include "log.h"
 
 void to_json(json& j, const Date& date) {
-	j = json{{"day", date.day}, {"month", date.day}, {"year", date.year}};
+	j = json{{"day", date.day}, {"month", date.month}, {"year", date.year}};
 }
 void from_json(const json& j, Date& date) {
 	j.at("day").get_to(date.day);
@@ -28,19 +28,19 @@ void from_json(const json& j, Project& proj) {
 	j.at("isDone").get_to(proj.isDone);
 }
 void to_json(json& j, const Skid& skid) {
-	Project projects;
-	if (skid.projects != nullptr) {
-		projects = *skid.projects;
+	Project project;
+	if (skid.project != nullptr) {
+		project = *skid.project;
 	}
 	j = json{
-		{"projects", projects},
+		{"project", project},
 		{"creationDate", skid.creationDate},
 		{"date", skid.date},
 	};
 }
 void from_json(const json& j, Skid& skid) {
-	skid.projects = new Project();
-	j.at("projects").get_to(*skid.projects);
+	skid.project = new Project();
+	j.at("project").get_to(*skid.project);
 	j.at("creationDate").get_to(skid.creationDate);
 	j.at("date").get_to(skid.date);
 }
@@ -132,31 +132,6 @@ Date get_today() {
 	res.month = currentTime->tm_mon;
 	res.year  = currentTime->tm_year + 1900;
 
-	return res;
-}
-
-int get_day_num(Date initial) {
-	auto m = (initial.month + 9) % 12;
-	auto y = initial.year - m / 10;
-	return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 +
-		   (initial.day - 1);
-}
-
-Date get_day_date(int g) {
-	auto y	 = (10000 * g + 14780) / 3652425;
-	auto ddd = g - (365 * y + y / 4 - y / 100 + y / 400);
-	if (ddd < 0)
-		y = y - 1;
-	ddd		= g - (365 * y + y / 4 - y / 100 + y / 400);
-	auto mi = (100 * ddd + 52) / 3060;
-	auto mm = (mi + 2) % 12 + 1;
-	y		= y + (mi + 2) / 12;
-	auto dd = ddd - (mi * 306 + 5) / 10 + 1;
-
-	Date res;
-	res.year  = y;
-	res.month = mm;
-	res.day	  = dd;
 	return res;
 }
 

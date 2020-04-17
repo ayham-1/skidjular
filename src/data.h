@@ -49,7 +49,7 @@ struct Project {
 };
 
 struct Skid {
-	Project* projects = nullptr;
+	Project* project = nullptr;
 	Date	 creationDate;
 	Date	 date;
 };
@@ -74,7 +74,7 @@ struct DB {
 	std::map<std::string, Project>* projects;
 	std::vector<Skid>				skids;
 	Log								log;
-	int								lastSkidID = 0;
+	int								lastSkidID = 1;
 
 	Date creationDate;
 	Date lastAccessTime;
