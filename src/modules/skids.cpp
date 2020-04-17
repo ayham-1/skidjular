@@ -100,7 +100,35 @@ void skids_now(skids_args args) {
 	std::cout << "Project of today is " << skid->project->name << std::endl;
 	exit(0);
 }
-void skids_this(skids_args args) {}
+
+void skids_this(skids_args args) {
+	logEntry("Accessing week's skid, skids_this", EntryType::Access);
+	/* Load all skids */
+	for (size_t i = 1; i <= args.db->lastSkidID; i++) {
+		Skid skid;
+		loadSkid(skid, i);
+		args.db->skids.push_back(skid);
+	}
+
+	/* Get week's skidID */
+	std::vector<Skid*> skids;
+	for (size_t i = 0; i < args.db->skids.size(); i++) {
+		if (args.db->skids[i].date == get_today()) {
+			for (size_t j = i; j < args.db->skids.size(); j++)
+				skids.push_back(&(args.db->skids[j]));
+			break;
+		}
+	}
+
+	for (auto skid: skids) {
+		std::cout << skid->date.year << "/" << skid->date.month << "/"
+				  << skid->date.day;
+		if (skid->project->name == "")
+			std::cout << ": Project unset." << std::endl;
+		else
+			std::cout << ": " << skid->project->name << std::endl;
+	}
+}
 void skids_set_this(skids_args args) {}
 void skids_set_this_lazy(skids_args args) {}
 void skids_set_lazy(skids_args args) {}
